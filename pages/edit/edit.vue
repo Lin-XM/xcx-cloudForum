@@ -48,7 +48,11 @@
 </template>
 
 <script>
-	import {getImageSrc,getProvince} from '../../utils/tools.js'
+	const db = uniCloud.database()
+	import {
+		getImageSrc,
+		getProvince
+	} from '../../utils/tools.js'
 	export default {
 		data() {
 			return {
@@ -58,29 +62,68 @@
 				headerStatus: false,
 				boldStatus: false,
 				italicStatus: false,
-				article:{
-					title:"",
-					content:"",
-					discription:'',
-					piculs:undefined,		// 缩略图
+				article: {
+					title: "",
+					content: "",
+					discription: '',
+					piculs: undefined, // 缩略图
+					province: ""
 				}
 			};
 		},
 		onLoad() {
-			// getProvince().then(res=>{
-			// 	console.log("调用省份：",res);
-			// })
+
 		},
 		methods: {
+			// add db data
+			addData() {
+				db.collection("xm-article").add({
+					...this.article
+				}).then(res => {
+					uni.hideLoading()
+					uni.showModal({
+						title: '提示',
+						content: '是否回到首页？',
+						success: function(res) {
+							if (res.confirm) {
+								uni.reLaunch({
+									url: "/pages/index/index"
+								})
+							} else if (res.cancel) {
+								// 清楚页面数据
+								uni.redirectTo({
+									url: "/pages/edit/edit"
+								})
+
+							}
+						},
+						fail: function(res) {
+							uni.redirectTo({
+								url: "/pages/edit/edit"
+							})
+						}
+					})
+
+				})
+			},
 			// 发表的事件
-			getEditorContent:function(){
+			getEditorContent: function() {
 				this.editorCtx.getContents({
-					success:(res)=>{
-						this.article.discription = res.text.slice(0,50)
+					success: (res) => {
+						this.article.discription = res.text.slice(0, 50)
 						this.article.content = res.html
-						this.article.piculs =getImageSrc(res.html,3)
+						this.article.piculs = getImageSrc(res.html, 3)
 					}
 				})
+				// 获取用户发表文章的IP地址
+				getProvince().then(res => {
+					this.article.province = res.province
+				})
+				this.addData()
+				uni.showLoading({
+					title: "发布中"
+				})
+				console.log('最终发表', this.article);
 			},
 			// 增加点击标题的 class
 			clickHeader: function() {
@@ -100,11 +143,11 @@
 				uni.chooseImage({
 					success: async (res) => {
 						uni.showLoading({
-							title:"上传中.....",
-							mask:true
+							title: "上传中.....",
+							mask: true
 						})
 						for (let item of res.tempFiles) {
-							let result =  await uniCloud.uploadFile({
+							let result = await uniCloud.uploadFile({
 								filePath: item.path,
 								cloudPath: item.name
 							})
