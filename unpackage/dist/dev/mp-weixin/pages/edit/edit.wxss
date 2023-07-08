@@ -46,7 +46,7 @@
   color: #999;
   padding-left: 12rpx;
 }
-.editWrapper .topPart .content.data-v-0fa9cb46 {
+.editWrapper .topPart .content .editor.data-v-0fa9cb46 {
   height: calc(100vh - 500rpx);
   margin-bottom: 50rpx;
 }

@@ -27,11 +27,6 @@ createPage(_edit.default);
   !*** F:/wxProgram/cloudForum/pages/edit/edit.vue ***!
   \***************************************************/
 /*! no static exports found */
-<<<<<<< HEAD
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js):\nError: ENOENT: no such file or directory, open 'F:\\wxProgram\\cloudForum\\pages\\edit\\edit.vue'");
-=======
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -169,12 +164,18 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
+/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 28));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 31));
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 //
 //
 //
@@ -234,10 +235,22 @@ var _default = {
       headerStatus: false,
       boldStatus: false,
       italicStatus: false,
-      pictureStatus: false
+      pictureStatus: false,
+      article: {
+        title: "",
+        content: ""
+      }
     };
   },
   methods: {
+    // 发表的事件
+    getEditorContent: function getEditorContent() {
+      this.editorCtx.getContents({
+        success: function success(res) {
+          console.log(res);
+        }
+      });
+    },
     // 增加点击标题的 class
     clickHeader: function clickHeader() {
       this.headerStatus = !this.headerStatus;
@@ -251,8 +264,52 @@ var _default = {
       this.italicStatus = !this.italicStatus;
       this.editorCtx.format("italic");
     },
-    clickPicture: function clickPicture() {
-      this.pictureStatus = !this.pictureStatus;
+    // 添加图像
+    clickPictureUpload: function clickPictureUpload() {
+      var _this = this;
+      uni.chooseImage({
+        success: function () {
+          var _success = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(res) {
+            var _iterator, _step, item, result;
+            return _regenerator.default.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    uni.showLoading({
+                      title: "上传中.....",
+                      mask: true
+                    });
+                    _iterator = _createForOfIteratorHelper(res.tempFiles);
+                    try {
+                      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                        item = _step.value;
+                        result = uniCloud.uploadFile({
+                          filePath: item.path,
+                          cloudPath: item.name
+                        });
+                        _this.editorCtx.insertImage({
+                          src: result.fileID
+                        });
+                      }
+                    } catch (err) {
+                      _iterator.e(err);
+                    } finally {
+                      _iterator.f();
+                    }
+                    uni.hideLoading();
+                  case 4:
+                  case "end":
+                    return _context.stop();
+                }
+              }
+            }, _callee);
+          }));
+          function success(_x) {
+            return _success.apply(this, arguments);
+          }
+          return success;
+        }()
+      });
     },
     // 添加分割线
     clickDivider: function clickDivider() {
@@ -277,14 +334,12 @@ var _default = {
     },
     // 获取富文本内容
     onReadyShow: function onReadyShow() {
-      var _this = this;
-      console.log(this.$refs.editor);
+      var _this2 = this;
       uni.createSelectorQuery().in(this).select(".editor").fields({
         size: true,
         context: true
       }, function (res) {
-        console.log(res);
-        _this.editorCtx = res.context;
+        _this2.editorCtx = res.context;
       }).exec();
     },
     // 离开焦点
@@ -294,7 +349,7 @@ var _default = {
   }
 };
 exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 27)["default"]))
 
 /***/ }),
 
@@ -324,7 +379,6 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
     if(false) { var cssReload; }
   
->>>>>>> temp1
 
 /***/ })
 

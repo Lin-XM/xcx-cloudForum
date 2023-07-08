@@ -1,29 +1,20 @@
 <template>
 	<view class="home">
 		<view class="topNav">
-			<u-tabs :list="navList" @click="()=>clickList" 
-			:activeStyle="{
+			<u-tabs :list="navList" @click="()=>clickList" :activeStyle="{
 		            color: '#333',
 		            fontWeight: 'bold',
 		            transform: 'scale(1.05)'
-		        }" 
-			:inactiveStyle="{
+		        }" :inactiveStyle="{
 		            color: '#888',
 		            transform: 'scale(1)'
-		        }"
-			lineColor="#2c993a"
-				 />
+		        }" lineColor="#2c993a" />
 		</view>
 		<view class="loadingStatus" v-show="loading">
-				<u-skeleton
-				    rows="4"
-				    title
-					loading
-					avatar 
-				></u-skeleton>
+			<u-skeleton rows="4" title loading avatar></u-skeleton>
 		</view>
 		<view class="content">
-			<view class="item" v-for="(item, index) in dataList" :key="index" >
+			<view class="item" v-for="(item, index) in dataList" :key="index">
 				<blogItem></blogItem>
 			</view>
 		</view>
@@ -46,8 +37,8 @@
 						name: "热门"
 					}
 				],
-				loading:false,
-				dataList:[1,2,3]
+				loading: false,
+				dataList: [1, 2, 3]
 			}
 		},
 		onLoad() {
@@ -57,9 +48,9 @@
 			clickList: function(e) {
 
 			},
-			editPages:function (){
+			editPages: function() {
 				uni.navigateTo({
-					url:"/pages/edit/edit"
+					url: "/pages/edit/edit"
 				})
 			}
 		}
@@ -75,15 +66,16 @@
 
 
 		.content {
-			.item{
+			.item {
 				padding: 30rpx 20rpx;
 				border-bottom: #f7f7f7 solid 10rpx;
 			}
 		}
 
-		.loadingStatus{
+		.loadingStatus {
 			padding: 30rpx;
 		}
+
 		.edit {
 			width: 120rpx;
 			height: 120rpx;

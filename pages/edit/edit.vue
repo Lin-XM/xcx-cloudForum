@@ -8,7 +8,7 @@
 	<view class="editWrapper">
 		<view class="topPart">
 			<view class="title">
-				<input type="text" placeholder="请输入标题内容" placeholder-class="placeholder">
+				<input type="text" v-model="article.title" placeholder="请输入标题内容" placeholder-class="placeholder">
 			</view>
 			<view class="content">
 				<editor ref="editor" class="editor" placeholder="请输入内容" show-img-resize show-img-toolbar show-img-size
@@ -16,10 +16,9 @@
 			</view>
 
 		</view>
-
 		<view class="bottomPart">
 			<view class="btnGroup">
-				<u-button type="primary" text="发表" :disabled="disabledStatus"></u-button>
+				<u-button type="primary" text="发表" :disabled="!article.title" @click="getEditorContent"></u-button>
 			</view>
 			<view class="tools" v-if="toolsShow">
 				<view class="item" @click="clickHeader">
@@ -30,12 +29,12 @@
 						:class=" boldStatus ? 'acitve' : '' "></text>
 				</view>
 				<view class="item" @click="clickItalic">
-					<text class="iconfont icon-zitixieti " :class=" italicStatus ? 'acitve' : '' "></text>
+					<text class="iconfont icon-zitixieti " :class="italicStatus ? 'acitve' : '' "></text>
 				</view>
 				<view class="item" @click="clickDivider">
 					<text class="iconfont icon-fengexian "></text>
 				</view>
-				<view class="item" @click="">
+				<view class="item" @click="clickPictureUpload">
 					<text class="iconfont icon-charutupian "></text>
 				</view>
 				<view class="item" @click="editorOK">
@@ -49,6 +48,7 @@
 </template>
 
 <script>
+	import {getImageSrc,getProvince} from '../../utils/tools.js'
 	export default {
 		data() {
 			return {
@@ -58,11 +58,30 @@
 				headerStatus: false,
 				boldStatus: false,
 				italicStatus: false,
-				pictureStatus: false,
-
+				article:{
+					title:"",
+					content:"",
+					discription:'',
+					piculs:undefined,		// 缩略图
+				}
 			};
 		},
+		onLoad() {
+			// getProvince().then(res=>{
+			// 	console.log("调用省份：",res);
+			// })
+		},
 		methods: {
+			// 发表的事件
+			getEditorContent:function(){
+				this.editorCtx.getContents({
+					success:(res)=>{
+						this.article.discription = res.text.slice(0,50)
+						this.article.content = res.html
+						this.article.piculs =getImageSrc(res.html,3)
+					}
+				})
+			},
 			// 增加点击标题的 class
 			clickHeader: function() {
 				this.headerStatus = !this.headerStatus
@@ -76,8 +95,26 @@
 				this.italicStatus = !this.italicStatus
 				this.editorCtx.format("italic")
 			},
-			clickPicture: function() {
-				this.pictureStatus = !this.pictureStatus
+			// 添加图像
+			clickPictureUpload: function() {
+				uni.chooseImage({
+					success: async (res) => {
+						uni.showLoading({
+							title:"上传中.....",
+							mask:true
+						})
+						for (let item of res.tempFiles) {
+							let result =  await uniCloud.uploadFile({
+								filePath: item.path,
+								cloudPath: item.name
+							})
+							this.editorCtx.insertImage({
+								src: result.fileID
+							})
+						}
+						uni.hideLoading()
+					}
+				})
 			},
 
 			// 添加分割线
@@ -105,12 +142,10 @@
 			},
 			// 获取富文本内容
 			onReadyShow: function() {
-				console.log(this.$refs.editor);
 				uni.createSelectorQuery().in(this).select(".editor").fields({
 					size: true,
 					context: true
 				}, (res) => {
-					console.log(res);
 					this.editorCtx = res.context
 				}).exec()
 			},
@@ -153,8 +188,11 @@
 			}
 
 			.content {
-				height: calc(100vh - 500rpx);
-				margin-bottom: 50rpx;
+				.editor {
+					height: calc(100vh - 500rpx);
+					margin-bottom: 50rpx;
+				}
+
 			}
 
 		}
