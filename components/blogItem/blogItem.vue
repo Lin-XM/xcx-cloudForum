@@ -3,13 +3,13 @@
 		<view class="head">
 			<view class="userInfo">
 				<view class="avatar">
-					<image src="../../static/userdefault.png" mode=" aspectFill" />
+					<image :src="itemInfo.user_id[0].avatar_file ? itemInfo.user_id[0].avatar_file : '../../static/userdefault.png'" mode=" aspectFill" />
 				</view>
 				<view class="name">
-					老王
+					{{itemInfo.user_id[0].nickname ? itemInfo.user_id[0].nickname : itemInfo.user_id[0].username  }}
 				</view>
 				<view class="time">
-					<uni-dateformat date="2020/10/20 20:20:20" :threshold="[60000,360000*24*30]" format="MM月dd hh:mm" />
+					<uni-dateformat :date="itemInfo.publish_date" :threshold="[60000,360000*24*30]" format="MM月dd hh:mm" />
 				</view>
 
 			</view>
@@ -22,30 +22,31 @@
 		<!-- 中间部分 -->
 		<view class="body">
 			<view class="title">
-				default title
+				{{itemInfo.title}}
 			</view>
 			<view class="text">
 				<view class="textItem">
-					conetntcionaodawdhahdafbhoibqawo
+					{{itemInfo.descrtion}}
 				</view>
 			</view>
 			<view class="picList">
-				<view class="pic" v-for="(item,index) in picList " :key="index">
-					<image src="../../static/test.png" mode="aspectFill"></image>
+				<view class="pic" v-for="(item,index) in itemInfo.piculs " :key="index">
+					<image :src="item" mode="aspectFill"></image>
 				</view>
 			</view>
 		</view>
 		<!--评论,点赞,之类的 -->
 		<view class="footer">
 			<view class="box">
-				<text class="iconfont icon-yueduxiao" /><text>11</text>
+				<text class="iconfont icon-yueduxiao" /><text>{{itemInfo.view_count}}</text>
 			</view>
 			<view class="box">
-				<text class="iconfont icon-pinglun" /><text>11</text>
+				<text
+					class="iconfont icon-pinglun" /><text>{{itemInfo.comment_count == 0 ? "评论" : itemInfo.comment_count}}</text>
 			</view>
 
 			<view class="box">
-				<text class="iconfont icon-zan" /><text>11</text>
+				<text class="iconfont icon-zan" /><text>{{itemInfo.like_count == 0 ? "点赞" : itemInfo.like_count}}</text>
 			</view>
 		</view>
 	</view>
@@ -54,6 +55,23 @@
 <script>
 	export default {
 		name: "blogItem",
+		props: {
+			itemInfo: {
+				typeof: Object,
+				default: {
+					title: '',
+					content: '',
+					publish_date: undefined,
+					like_count: 0,
+					view_count: 1,
+					comment_count: 0,
+					province: "",
+					descrtion: '',
+					piculs: [],
+					user_id:[],
+				}
+			}
+		},
 		data() {
 			return {
 				picList: [1]
@@ -62,7 +80,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.blogWrapper {
 		.head {
 			display: flex;

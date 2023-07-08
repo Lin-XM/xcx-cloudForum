@@ -14,8 +14,8 @@
 			<u-skeleton rows="4" title loading avatar></u-skeleton>
 		</view>
 		<view class="content">
-			<view class="item" v-for="(item, index) in dataList" :key="index">
-				<blogItem></blogItem>
+			<view class="item" v-for="(item, index) in dataList" :key="item._id">
+				<blogItem :itemInfo="item"></blogItem>
 			</view>
 		</view>
 		<view class="edit">
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+	const db = uniCloud.database()
 	export default {
 		data() {
 			return {
@@ -38,13 +39,29 @@
 					}
 				],
 				loading: false,
-				dataList: [1, 2, 3]
+				dataList: []
 			}
 		},
 		onLoad() {
-
+			this.getArticleData()
 		},
 		methods: {
+			// 获取页面数据
+			getArticleData: function() {
+				// 主表
+				let artTmp = db.collection("xm-article").field(
+						'user_id,title,content,publish_date,like_count,view_count,comment_count,descrtion,province,piculs'
+						)
+					.getTemp()
+				// 副表
+				let userTmp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
+				db.collection(artTmp, userTmp).get().then(res => {
+					console.log("链表查询结果：", res)
+					this.dataList = res.result.data
+				})
+			},
+
+			// 切换 tabs
 			clickList: function(e) {
 
 			},
