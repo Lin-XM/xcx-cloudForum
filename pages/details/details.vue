@@ -2,18 +2,29 @@
 	<view class="detailWrapper">
 		<view class="container">
 
-			<unicloud-db v-slot:default="{data, loading, error, options}" collection="xm-article"
+			<unicloud-db v-slot:default="{data, loading, error, options}" :collection="collections"
 				:where="`_id =='${artId}'`" :getone="true">
 				<view v-if="error">{{error.message}}</view>
+				<view v-else-if="loading">
+					<u-skeleton rows="4" title loading avatar></u-skeleton>
+				</view>
 				<view v-else>
 					<view class="title">{{data.title}}</view>
 					<view class="userinfo">
 						<view class="avatar">
-							<image src="../../static/userdefault.png" mode="aspectFill"></image>
+							<image
+								:src="data.user_id[0].avatar_file ? data.user_id[0].avatar_file.url  : '../../static/userdefault.png'"
+								mode="aspectFill"></image>
 						</view>
 						<view class="text">
-							<view class="name">王五</view>
-							<view class="small">6天前 · 发布于北京市</view>
+							<view class="name">
+								{{data.user_id[0].nickname ? data.user_id[0].nickname : data.user_id[0].username }}
+							</view>
+							<view class="small">
+								<uni-dateformat :date="data.publish_date" :threshold="[60000,360000*24*30]"
+									format="yyyy年MM月dd hh:mm:ss" />
+								发布于{{data.province ? data.province : "火星"}}
+							</view>
 						</view>
 					</view>
 					<view class="content">
@@ -22,10 +33,6 @@
 
 				</view>
 			</unicloud-db>
-
-
-
-
 			<view class="like">
 				<view class="btn">
 					<text class="iconfont icon-zan"></text>
@@ -42,6 +49,7 @@
 </template>
 
 <script>
+	const db = uniCloud.database()
 	export default {
 		data() {
 			return {
@@ -49,11 +57,14 @@
 				tagStyle: {
 					p: "line-height:1.7rem;font-size:16rpx;padding-bottom:12rpx",
 					img: "margin:10rpx 0 "
-				}
+				},
+				collections: [
+					db.collection('xm-article').getTemp(),
+					db.collection('uni-id-users').field('_id,username,nickname,avatar_file').getTemp()
+				]
 			};
 		},
 		onLoad: function(e) {
-			console.log(e);
 			this.artId = e.id
 		}
 	}
