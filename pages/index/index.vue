@@ -1,7 +1,7 @@
 <template>
 	<view class="home">
 		<view class="topNav">
-			<u-tabs :list="navList" @click="()=>clickList" :activeStyle="{
+			<u-tabs :list="navList" @click="clickList" :activeStyle="{
 		            color: '#333',
 		            fontWeight: 'bold',
 		            transform: 'scale(1.05)'
@@ -31,14 +31,17 @@
 			return {
 				navList: [{
 						id: 1,
-						name: "最新"
+						name: "最新",
+						type: "publishDate"
 					},
 					{
 						id: 2,
-						name: "热门"
+						name: "热门",
+						type: "view_count"
 					}
 				],
-				loading: false,
+				tabsActive: 0,
+				loading: true,
 				dataList: []
 			}
 		},
@@ -51,19 +54,22 @@
 				// 主表
 				let artTmp = db.collection("xm-article").field(
 						'user_id,title,content,publish_date,like_count,view_count,comment_count,descrtion,province,piculs'
-						)
+					)
 					.getTemp()
 				// 副表
-				let userTmp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
-				db.collection(artTmp, userTmp).get().then(res => {
-					console.log("链表查询结果：", res)
+				let userTmp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file.url").getTemp()
+				db.collection(artTmp, userTmp).orderBy(this.navList[this.tabsActive].type, 'desc').get().then(res => {
 					this.dataList = res.result.data
+					this.loading = false
 				})
 			},
 
 			// 切换 tabs
 			clickList: function(e) {
-
+				this.tabsActive = e.index
+				this.dataList = [] 
+				this.loading = true
+				this.getArticleData()
 			},
 			editPages: function() {
 				uni.navigateTo({

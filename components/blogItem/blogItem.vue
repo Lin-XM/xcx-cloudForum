@@ -21,17 +21,17 @@
 		</view>
 		<!-- 中间部分 -->
 		<view class="body">
-			<view class="title">
+			<view class="title" @click="toDetail">
 				{{itemInfo.title}}
 			</view>
-			<view class="text">
+			<view class="text" @click="toDetail">
 				<view class="textItem">
 					{{itemInfo.descrtion}}
 				</view>
 			</view>
 			<view class="picList">
 				<view class="pic" v-for="(item,index) in itemInfo.piculs " :key="index">
-					<image :src="item" mode="aspectFill"></image>
+					<image @click="clickImage(index)" :src="item" mode="aspectFill"></image>
 				</view>
 			</view>
 		</view>
@@ -76,6 +76,22 @@
 			return {
 				picList: [1]
 			};
+		},
+		methods:{
+			// 点击缩略图
+			clickImage:function(index){
+				uni.previewImage({
+					urls:this.itemInfo.piculs,
+					current:index
+				})
+			},
+			
+			//  跳转详情页面
+			toDetail:function(){
+				uni.navigateTo({
+					url:'/pages/details/details?id='+ this.itemInfo._id
+				})
+			}
 		}
 	}
 </script>
