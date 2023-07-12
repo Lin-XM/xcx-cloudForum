@@ -23,13 +23,13 @@
 						</view>
 					</view>
 				</view>
-				<view class="content">
+				<view class="content" :class="activeBtn ? 'active' :''">
 					<u-parse :content="data.content" :selectable="true" :style="tagStyle"></u-parse>
 				</view>
 				<view class="like">
-					<view class="btn">
+					<view class="btn" @click="likeBtn" :class="data.islike ? 'active' :false ">
 						<text class="iconfont icon-zan"></text>
-						<text v-show="data.like_count != 0">{{data.like_count}}</text>
+						<text v-if="data.like_count != 0">{{data.like_count}}</text>
 					</view>
 					<view class="users">
 						<image src="../../static/userdefault.png" mode="aspectFill"></image>
@@ -43,7 +43,10 @@
 
 <script>
 	const db = uniCloud.database()
-	let timer = null
+	const utils = uniCloud.importObject('utils', {
+		customUI: true,
+	})
+	let timer = null			// 定时器
 	export default {
 		data() {
 			return {
@@ -61,7 +64,10 @@
 					content: '',
 					view_count: 0,
 					like_count: 0,
-				}
+					islike: null,
+				},
+				activeBtn: false,
+
 			};
 		},
 		onLoad: function(e) {
@@ -72,11 +78,61 @@
 				this.errFunc()
 			}
 
+			this.viewUpdate()
 		},
 		onUnload: function() {
 			clearTimeout(timer)
 		},
 		methods: {
+			// 点赞操作
+			likeBtn: async function() {
+				let timeStart = Date.now()
+				if (timeStart - this.likeTime < 2000) {
+					uni.showToast({
+						title: "操作频繁，请稍后...",
+						icon: 'none'
+					})
+					return
+				}
+				this.data.islike ? this.data.like_count-- : this.data.like_count++
+				this.data.islike = !this.data.islike
+				this.likeTime = timeStart
+
+				// 获取用户是否在该文章点过赞
+				this.likeFunc()
+			},
+
+			// 点赞方法
+			likeFunc: async function() {
+				db.collection('user_like').where(`article_id == '${this.artId}' && user_id == $cloudEnv_uid`).count()
+					.then(res => {
+						if (res.result.total == 0) {
+							db.collection('user_like').add({
+								article_id: this.artId,
+							}).then(() => {
+								this.artiveBtn = true
+
+							})
+							utils.operation('xm-article', "like_count", this.artId, 1)
+
+						} else {
+							// 删除当前用户的 这条篇文章的
+							db.collection('user_like').where(
+									`article_id == '${this.artId}' && user_id == $cloudEnv_uid`)
+								.remove().then(() => {
+									this.artiveBtn = false
+								})
+							utils.operation('xm-article', "like_count", this.artId, -1)
+						}
+					})
+			},
+
+			// view uipdate
+			viewUpdate: function() {
+				utils.operation('xm-article', "view_count", this.artId, 1)
+			},
+
+
 			// error 错误信息
 			errFunc: function() {
 				uni.showToast({
@@ -90,15 +146,22 @@
 			},
 			// 获取数据
 			getDataDetail: function() {
-				let artTemp = db.collection('xm-article').getTemp()
+				let artTemp = db.collection('xm-article').where(`_id == '${this.artId}'`).getTemp()
 				let userTemp = db.collection('uni-id-users').field('_id,username,nickname,avatar_file').getTemp()
-				db.collection(artTemp, userTemp).where(`_id == '${this.artId}'`).get({
+				let likeTemp = db.collection('user_like').where(
+					`article_id == '${this.artId}' && user_id == $cloudEnv_uid`).getTemp()
+				db.collection(artTemp, userTemp, likeTemp).get({
 					getOne: true
 				}).then(res => {
-					console.log(res)
+					console.log('结果', res)
 					if (!res.result.data) {
 						this.errFunc()
 					}
+					uni.setNavigationBarTitle({
+						title:res.result.data.title
+					})
+					let islike = res.result.data._id.user_like.length ? true : false
+					res.result.data.islike = islike
 					this.data = res.result.data
 					this.loadingStatus = false
 				})

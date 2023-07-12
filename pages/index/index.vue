@@ -51,7 +51,6 @@
 		methods: {
 			// 获取页面数据
 			getArticleData: function() {
-				// 主表
 				let artTmp = db.collection("xm-article").field(
 						'user_id,title,content,publish_date,like_count,view_count,comment_count,descrtion,province,piculs'
 					)
