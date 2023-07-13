@@ -102,13 +102,13 @@ var components
 try {
   components = {
     uTabs: function () {
-      return Promise.all(/*! import() | uni_modules/uview-ui/components/u-tabs/u-tabs */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uview-ui/components/u-tabs/u-tabs")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uview-ui/components/u-tabs/u-tabs.vue */ 190))
+      return Promise.all(/*! import() | uni_modules/uview-ui/components/u-tabs/u-tabs */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uview-ui/components/u-tabs/u-tabs")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uview-ui/components/u-tabs/u-tabs.vue */ 335))
     },
     uSkeleton: function () {
-      return Promise.all(/*! import() | uni_modules/uview-ui/components/u-skeleton/u-skeleton */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uview-ui/components/u-skeleton/u-skeleton")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uview-ui/components/u-skeleton/u-skeleton.vue */ 198))
+      return Promise.all(/*! import() | uni_modules/uview-ui/components/u-skeleton/u-skeleton */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uview-ui/components/u-skeleton/u-skeleton")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uview-ui/components/u-skeleton/u-skeleton.vue */ 343))
     },
     blogItem: function () {
-      return __webpack_require__.e(/*! import() | components/blogItem/blogItem */ "components/blogItem/blogItem").then(__webpack_require__.bind(null, /*! @/components/blogItem/blogItem.vue */ 206))
+      return __webpack_require__.e(/*! import() | components/blogItem/blogItem */ "components/blogItem/blogItem").then(__webpack_require__.bind(null, /*! @/components/blogItem/blogItem.vue */ 351))
     },
   }
 } catch (e) {
@@ -132,11 +132,6 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  if (!_vm._isMounted) {
-    _vm.e0 = function () {
-      return _vm.clickList
-    }
-  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -170,7 +165,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
+/* WEBPACK VAR INJECTION */(function(uniCloud, uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -202,23 +197,47 @@ exports.default = void 0;
 //
 //
 //
+
+var db = uniCloud.database();
 var _default = {
   data: function data() {
     return {
       navList: [{
         id: 1,
-        name: "最新"
+        name: "最新",
+        type: "publishDate"
       }, {
         id: 2,
-        name: "热门"
+        name: "热门",
+        type: "view_count"
       }],
-      loading: false,
-      dataList: [1, 2, 3]
+      tabsActive: 0,
+      loading: true,
+      dataList: []
     };
   },
-  onLoad: function onLoad() {},
+  onLoad: function onLoad() {
+    this.getArticleData();
+  },
   methods: {
-    clickList: function clickList(e) {},
+    // 获取页面数据
+    getArticleData: function getArticleData() {
+      var _this = this;
+      var artTmp = db.collection("xm-article").field('user_id,title,content,publish_date,like_count,view_count,comment_count,descrtion,province,piculs').getTemp();
+      // 副表
+      var userTmp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file.url").getTemp();
+      db.collection(artTmp, userTmp).orderBy(this.navList[this.tabsActive].type, 'desc').get().then(function (res) {
+        _this.dataList = res.result.data;
+        _this.loading = false;
+      });
+    },
+    // 切换 tabs
+    clickList: function clickList(e) {
+      this.tabsActive = e.index;
+      this.dataList = [];
+      this.loading = true;
+      this.getArticleData();
+    },
     editPages: function editPages() {
       uni.navigateTo({
         url: "/pages/edit/edit"
@@ -227,7 +246,7 @@ var _default = {
   }
 };
 exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 27)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 

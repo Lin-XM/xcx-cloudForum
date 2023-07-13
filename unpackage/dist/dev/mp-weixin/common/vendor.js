@@ -17391,6 +17391,97 @@ var _default = {
       "navigationBarTitleText": "发布长文",
       "enablePullDownRefresh": false
     }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
+    "style": {
+      "navigationBarTitleText": "注销账号"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
+    "style": {
+      "navigationBarTitleText": "个人资料"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
+    "style": {
+      "navigationBarTitleText": "绑定手机号码"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+    "style": {
+      "navigationBarTitleText": ""
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
+    "style": {
+      "navigationBarTitleText": ""
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/login/login-withpwd",
+    "style": {
+      "navigationBarTitleText": "登录"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/login/login-smscode",
+    "style": {
+      "navigationBarTitleText": "手机验证码登录"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/register/register",
+    "style": {
+      "navigationBarTitleText": "注册"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/register/register-by-email",
+    "style": {
+      "navigationBarTitleText": "邮箱验证码注册"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/retrieve/retrieve",
+    "style": {
+      "navigationBarTitleText": "重置密码"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/retrieve/retrieve-by-email",
+    "style": {
+      "navigationBarTitleText": "通过邮箱重置密码"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/common/webview/webview",
+    "style": {
+      "enablePullDownRefresh": false,
+      "navigationBarTitleText": ""
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd",
+    "style": {
+      "enablePullDownRefresh": false,
+      "navigationBarTitleText": "修改密码"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/register/register-admin",
+    "style": {
+      "enablePullDownRefresh": false,
+      "navigationBarTitleText": "注册管理员账号"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd",
+    "style": {
+      "enablePullDownRefresh": false,
+      "navigationBarTitleText": "设置密码"
+    }
+  }, {
+    "path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
+    "style": {
+      "enablePullDownRefresh": false,
+      "navigationBarTitleText": "实名认证"
+    }
+  }, {
+    "path": "pages/details/details",
+    "style": {
+      "navigationBarTitleText": "详情",
+      "enablePullDownRefresh": false
+    }
   }],
   "globalStyle": {
     "navigationBarTextStyle": "white",
@@ -17398,7 +17489,11 @@ var _default = {
     "navigationBarBackgroundColor": "#2c993a",
     "backgroundColor": "#2c993a"
   },
-  "uniIdRouter": {},
+  "uniIdRouter": {
+    "loginPage": "uni_modules/uni-id-pages/pages/login/login-withpwd",
+    "needLogin": ["pages/edit/edit", "uni_modules/uni-id-pages/pages/userinfo/userinfo"],
+    "resToLogin": true
+  },
   "tabBar": {
     "color": "black",
     "selectedColor": "#2c993a",
@@ -26828,8 +26923,331 @@ uni.addInterceptor({
 /* 179 */,
 /* 180 */,
 /* 181 */,
-/* 182 */,
-/* 183 */,
+/* 182 */
+/*!************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-id-pages/common/store.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uniCloud, uni) {
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.store = exports.mutations = void 0;
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 28));
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 31));
+var _pages = _interopRequireDefault(__webpack_require__(/*! @/pages.json */ 37));
+var _config = _interopRequireDefault(__webpack_require__(/*! @/uni_modules/uni-id-pages/config.js */ 183));
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 25));
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var uniIdCo = uniCloud.importObject("uni-id-co");
+var db = uniCloud.database();
+var usersTable = db.collection('uni-id-users');
+var hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo') || {};
+// console.log( hostUserInfo);
+var data = {
+  userInfo: hostUserInfo,
+  hasLogin: Object.keys(hostUserInfo).length != 0
+};
+
+// console.log('data', data);
+// 定义 mutations, 修改属性
+var mutations = {
+  // data不为空，表示传递要更新的值(注意不是覆盖是合并),什么也不传时，直接查库获取更新
+  updateUserInfo: function updateUserInfo() {
+    var _arguments = arguments,
+      _this = this;
+    return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+      var data, _uniIdCo, res, realNameRes;
+      return _regenerator.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              data = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : false;
+              if (!data) {
+                _context.next = 5;
+                break;
+              }
+              usersTable.where('_id==$env.uid').update(data).then(function (e) {
+                // console.log(e);
+                if (e.result.updated) {
+                  uni.showToast({
+                    title: "更新成功",
+                    icon: 'none',
+                    duration: 3000
+                  });
+                  _this.setUserInfo(data);
+                } else {
+                  uni.showToast({
+                    title: "没有改变",
+                    icon: 'none',
+                    duration: 3000
+                  });
+                }
+              });
+              _context.next = 20;
+              break;
+            case 5:
+              _uniIdCo = uniCloud.importObject("uni-id-co", {
+                customUI: true
+              });
+              _context.prev = 6;
+              _context.next = 9;
+              return usersTable.where("'_id' == $cloudEnv_uid").field('mobile,nickname,username,email,avatar_file').get();
+            case 9:
+              res = _context.sent;
+              _context.next = 12;
+              return _uniIdCo.getRealNameInfo();
+            case 12:
+              realNameRes = _context.sent;
+              // console.log('fromDbData',res.result.data);
+              _this.setUserInfo(_objectSpread(_objectSpread({}, res.result.data[0]), {}, {
+                realNameAuth: realNameRes
+              }));
+              _context.next = 20;
+              break;
+            case 16:
+              _context.prev = 16;
+              _context.t0 = _context["catch"](6);
+              _this.setUserInfo({}, {
+                cover: true
+              });
+              console.error(_context.t0.message, _context.t0.errCode);
+            case 20:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[6, 16]]);
+    }))();
+  },
+  setUserInfo: function setUserInfo(data) {
+    var _arguments2 = arguments;
+    return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
+      var _ref, cover, userInfo;
+      return _regenerator.default.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _ref = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : {
+                cover: false
+              }, cover = _ref.cover;
+              // console.log('set-userInfo', data);
+              userInfo = cover ? data : Object.assign(store.userInfo, data);
+              store.userInfo = Object.assign({}, userInfo);
+              store.hasLogin = Object.keys(store.userInfo).length != 0;
+              // console.log('store.userInfo', store.userInfo);
+              uni.setStorageSync('uni-id-pages-userInfo', store.userInfo);
+              return _context2.abrupt("return", data);
+            case 6:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  logout: function logout() {
+    var _this2 = this;
+    return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3() {
+      return _regenerator.default.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              if (!(uniCloud.getCurrentUserInfo().tokenExpired > Date.now())) {
+                _context3.next = 9;
+                break;
+              }
+              _context3.prev = 1;
+              _context3.next = 4;
+              return uniIdCo.logout();
+            case 4:
+              _context3.next = 9;
+              break;
+            case 6:
+              _context3.prev = 6;
+              _context3.t0 = _context3["catch"](1);
+              console.error(_context3.t0);
+            case 9:
+              uni.removeStorageSync('uni_id_token');
+              uni.setStorageSync('uni_id_token_expired', 0);
+              uni.redirectTo({
+                //      pagesJson.uniIdRouter 表示是否使用免密登录
+                url: "/".concat(_pages.default.uniIdRouter && _pages.default.uniIdRouter.loginPage ? _pages.default.uniIdRouter.loginPage : 'pages/index/index')
+              });
+              uni.$emit('uni-id-pages-logout');
+              _this2.setUserInfo({}, {
+                cover: true
+              });
+            case 14:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[1, 6]]);
+    }))();
+  },
+  loginBack: function loginBack() {
+    var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var _e$uniIdRedirectUrl = e.uniIdRedirectUrl,
+      uniIdRedirectUrl = _e$uniIdRedirectUrl === void 0 ? '' : _e$uniIdRedirectUrl;
+    var delta = 0; //判断需要返回几层
+    var pages = getCurrentPages();
+    // console.log(pages);
+    pages.forEach(function (page, index) {
+      if (pages[pages.length - index - 1].route.split('/')[3] == 'login') {
+        delta++;
+      }
+    });
+    // console.log('判断需要返回几层:', delta);
+    if (uniIdRedirectUrl) {
+      return uni.redirectTo({
+        url: uniIdRedirectUrl,
+        fail: function fail(err1) {
+          uni.switchTab({
+            url: uniIdRedirectUrl,
+            fail: function fail(err2) {
+              console.log(err1, err2);
+            }
+          });
+        }
+      });
+    }
+    if (delta) {
+      var page = _pages.default.pages[0];
+      return uni.reLaunch({
+        url: "/".concat(page.path)
+      });
+    }
+    uni.navigateBack({
+      delta: delta
+    });
+  },
+  loginSuccess: function loginSuccess() {
+    var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var _e$showToast = e.showToast,
+      showToast = _e$showToast === void 0 ? true : _e$showToast,
+      _e$toastText = e.toastText,
+      toastText = _e$toastText === void 0 ? '登录成功' : _e$toastText,
+      _e$autoBack = e.autoBack,
+      autoBack = _e$autoBack === void 0 ? true : _e$autoBack,
+      _e$uniIdRedirectUrl2 = e.uniIdRedirectUrl,
+      uniIdRedirectUrl = _e$uniIdRedirectUrl2 === void 0 ? '' : _e$uniIdRedirectUrl2,
+      passwordConfirmed = e.passwordConfirmed;
+    // console.log({toastText,autoBack});
+    if (showToast) {
+      uni.showToast({
+        title: toastText,
+        icon: 'none',
+        duration: 3000
+      });
+    }
+    this.updateUserInfo();
+    uni.$emit('uni-id-pages-login-success');
+    if (_config.default.setPasswordAfterLogin && !passwordConfirmed) {
+      return uni.redirectTo({
+        url: uniIdRedirectUrl ? "/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?uniIdRedirectUrl=".concat(uniIdRedirectUrl, "&loginType=").concat(e.loginType) : "/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?loginType=".concat(e.loginType),
+        fail: function fail(err) {
+          console.log(err);
+        }
+      });
+    }
+    if (autoBack) {
+      this.loginBack({
+        uniIdRedirectUrl: uniIdRedirectUrl
+      });
+    }
+  }
+};
+exports.mutations = mutations;
+// 通过Vue.observable创建一个可响应的对象
+var store = _vue.default.observable(data);
+exports.store = store;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 27)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 183 */
+/*!******************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-id-pages/config.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  // 调试模式
+  debug: false,
+  /*
+  登录类型 未列举到的或运行环境不支持的，将被自动隐藏。
+  如果需要在不同平台有不同的配置，直接用条件编译即可
+  */
+  isAdmin: false,
+  // 区分管理端与用户端
+  loginTypes: [
+  // "qq",
+  // "xiaomi",
+  // "sinaweibo",
+  // "taobao",
+  // "facebook",
+  // "google",
+  // "alipay",
+  // "douyin",
+
+  'weixin', 'username', 'smsCode'],
+  // 政策协议
+  agreements: {
+    serviceUrl: 'https://xxx',
+    // 用户服务协议链接
+    privacyUrl: 'https://xxx',
+    // 隐私政策条款链接
+    // 哪些场景下显示，1.注册（包括登录并注册，如：微信登录、苹果登录、短信验证码登录）、2.登录（如：用户名密码登录）
+    scope: ['register', 'login', 'realNameVerify']
+  },
+  // 提供各类服务接入（如微信登录服务）的应用id
+  appid: {
+    weixin: {
+      // 微信公众号的appid，来源:登录微信公众号（https://mp.weixin.qq.com）-> 设置与开发 -> 基本配置 -> 公众号开发信息 -> AppID
+      h5: 'xxxxxx',
+      // 微信开放平台的appid，来源:登录微信开放平台（https://open.weixin.qq.com） -> 管理中心 -> 网站应用 -> 选择对应的应用名称，点击查看 -> AppID
+      web: 'xxxxxx'
+    }
+  },
+  /**
+  * 密码强度
+  * super（超强：密码必须包含大小写字母、数字和特殊符号，长度范围：8-16位之间）
+  * strong（强: 密密码必须包含字母、数字和特殊符号，长度范围：8-16位之间）
+  * medium (中：密码必须为字母、数字和特殊符号任意两种的组合，长度范围：8-16位之间)
+  * weak（弱：密码必须包含字母和数字，长度范围：6-16位之间）
+  * 为空或false则不验证密码强度
+  */
+  passwordStrength: 'medium',
+  /**
+  * 登录后允许用户设置密码（只针对未设置密码得用户）
+  * 开启此功能将 setPasswordAfterLogin 设置为 true 即可
+  * "setPasswordAfterLogin": false
+  *
+  * 如果允许用户跳过设置密码 将 allowSkip 设置为 true
+  * "setPasswordAfterLogin": {
+  *   "allowSkip": true
+  * }
+  * */
+  setPasswordAfterLogin: false
+};
+exports.default = _default;
+
+/***/ }),
 /* 184 */,
 /* 185 */,
 /* 186 */,
@@ -26838,10 +27256,579 @@ uni.addInterceptor({
 /* 189 */,
 /* 190 */,
 /* 191 */,
-/* 192 */,
+/* 192 */
+/*!**********************************************!*\
+  !*** F:/wxProgram/cloudForum/utils/tools.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getImageSrc = getImageSrc;
+exports.getProvince = getProvince;
+// 获取 image 的网络 URL地址
+function getImageSrc(richText) {
+  var num = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
+  var imageList = [];
+  richText.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/g, function (match, capture) {
+    imageList.push(capture);
+  });
+  imageList = imageList.slice(0, num);
+  return imageList;
+}
+;
+// 获取省份的函数
+function getProvince() {
+  return new Promise(function (resolve, reject) {
+    // localstorage
+    var history = uni.getStorageSync("historyProvince");
+    if (history) {
+      // 一小时重新获取一次
+      if (Date.now() - history.time > 1000 * 60 * 60) {
+        getUserIp().then(function (res) {
+          resolve(res);
+        }).catch(function (error) {
+          reject(error);
+        });
+      }
+      resolve(history);
+    } else {
+      getUserIp().then(function (res) {
+        resolve(res);
+      }).catch(function (error) {
+        reject(error);
+      });
+    }
+  });
+}
+;
+// 获取发布文章的用户当前IP的地址
+function getUserIp() {
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      // 参数 key 为高德地图的开发者key，调用次数每日 5000
+      // url:"https://restapi.amap.com/v3/ip?key=545387a4c32ec737e7ec5d0fc9942462&ip=123.13.123.123",
+      url: "https://restapi.amap.com/v3/ip?key=545387a4c32ec737e7ec5d0fc9942462",
+      success: function success(res) {
+        if (typeof res.data.province !== "string") {
+          res.data.province === '火星';
+        }
+        resolve(res.data);
+        var obj = {
+          province: res.data.province,
+          time: Date.now()
+        };
+        uni.setStorageSync("historyProvince", obj);
+      },
+      fail: function fail(error) {
+        reject(error);
+      }
+    });
+  });
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
 /* 193 */,
 /* 194 */,
-/* 195 */
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */
+/*!***********************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-id-pages/common/login-page.mixin.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
+var _store = __webpack_require__(/*! @/uni_modules/uni-id-pages/common/store.js */ 182);
+var _config = _interopRequireDefault(__webpack_require__(/*! @/uni_modules/uni-id-pages/config.js */ 183));
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var mixin = {
+  data: function data() {
+    return {
+      config: _config.default,
+      uniIdRedirectUrl: '',
+      isMounted: false
+    };
+  },
+  onUnload: function onUnload() {},
+  mounted: function mounted() {
+    this.isMounted = true;
+  },
+  onLoad: function onLoad(e) {
+    var _this = this;
+    if (e.is_weixin_redirect) {
+      uni.showLoading({
+        mask: true
+      });
+      if (window.location.href.includes('#')) {
+        // 将url通过 ? 分割获取后面的参数字符串 再通过 & 将每一个参数单独分割出来
+        var paramsArr = window.location.href.split('?')[1].split('&');
+        paramsArr.forEach(function (item) {
+          var arr = item.split('=');
+          if (arr[0] == 'code') {
+            e.code = arr[1];
+          }
+        });
+      }
+      this.$nextTick(function (n) {
+        // console.log(this.$refs.uniFabLogin);
+        _this.$refs.uniFabLogin.login({
+          code: e.code
+        }, 'weixin');
+      });
+    }
+    if (e.uniIdRedirectUrl) {
+      this.uniIdRedirectUrl = decodeURIComponent(e.uniIdRedirectUrl);
+    }
+    if (getCurrentPages().length === 1) {
+      uni.hideHomeButton();
+      console.log('已隐藏：返回首页按钮');
+    }
+  },
+  computed: {
+    needAgreements: function needAgreements() {
+      if (this.isMounted) {
+        if (this.$refs.agreements) {
+          return this.$refs.agreements.needAgreements;
+        } else {
+          return false;
+        }
+      }
+    },
+    agree: {
+      get: function get() {
+        if (this.isMounted) {
+          if (this.$refs.agreements) {
+            return this.$refs.agreements.isAgree;
+          } else {
+            return true;
+          }
+        }
+      },
+      set: function set(agree) {
+        if (this.$refs.agreements) {
+          this.$refs.agreements.isAgree = agree;
+        } else {
+          console.log('不存在 隐私政策协议组件');
+        }
+      }
+    }
+  },
+  methods: {
+    loginSuccess: function loginSuccess(e) {
+      _store.mutations.loginSuccess(_objectSpread(_objectSpread({}, e), {}, {
+        uniIdRedirectUrl: this.uniIdRedirectUrl
+      }));
+    }
+  }
+};
+var _default = mixin;
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */
+/*!************************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-id-pages/pages/register/validator.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
+var _password = _interopRequireDefault(__webpack_require__(/*! @/uni_modules/uni-id-pages/common/password.js */ 259));
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var _default = _objectSpread({
+  "username": {
+    "rules": [{
+      required: true,
+      errorMessage: '请输入用户名'
+    }, {
+      minLength: 3,
+      maxLength: 32,
+      errorMessage: '用户名长度在 {minLength} 到 {maxLength} 个字符'
+    }, {
+      validateFunction: function validateFunction(rule, value, data, callback) {
+        // console.log(value);
+        if (/^1\d{10}$/.test(value) || /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(value)) {
+          callback('用户名不能是：手机号或邮箱');
+        }
+        ;
+        if (/^\d+$/.test(value)) {
+          callback('用户名不能为纯数字');
+        }
+        ;
+        if (/[\u4E00-\u9FA5\uF900-\uFA2D]{1,}/.test(value)) {
+          callback('用户名不能包含中文');
+        }
+        return true;
+      }
+    }],
+    "label": "用户名"
+  },
+  "nickname": {
+    "rules": [{
+      minLength: 3,
+      maxLength: 32,
+      errorMessage: '昵称长度在 {minLength} 到 {maxLength} 个字符'
+    }, {
+      validateFunction: function validateFunction(rule, value, data, callback) {
+        // console.log(value);
+        if (/^1\d{10}$/.test(value) || /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(value)) {
+          callback('昵称不能是：手机号或邮箱');
+        }
+        ;
+        if (/^\d+$/.test(value)) {
+          callback('昵称不能为纯数字');
+        }
+        ;
+        if (/[\u4E00-\u9FA5\uF900-\uFA2D]{1,}/.test(value)) {
+          callback('昵称不能包含中文');
+        }
+        return true;
+      }
+    }],
+    "label": "昵称"
+  }
+}, _password.default.getPwdRules());
+exports.default = _default;
+
+/***/ }),
+/* 259 */
+/*!***************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-id-pages/common/password.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! @/uni_modules/uni-id-pages/config.js */ 183));
+// 导入配置
+
+var passwordStrength = _config.default.passwordStrength;
+
+// 密码强度表达式
+var passwordRules = {
+  // 密码必须包含大小写字母、数字和特殊符号
+  super: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/])[0-9a-zA-Z~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]{8,16}$/,
+  // 密码必须包含字母、数字和特殊符号
+  strong: /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/])[0-9a-zA-Z~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]{8,16}$/,
+  // 密码必须为字母、数字和特殊符号任意两种的组合
+  medium: /^(?![0-9]+$)(?![a-zA-Z]+$)(?![~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]+$)[0-9a-zA-Z~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]{8,16}$/,
+  // 密码必须包含字母和数字
+  weak: /^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]{6,16}$/
+};
+var ERROR = {
+  normal: {
+    noPwd: '请输入密码',
+    noRePwd: '再次输入密码',
+    rePwdErr: '两次输入密码不一致'
+  },
+  passwordStrengthError: {
+    super: '密码必须包含大小写字母、数字和特殊符号，密码长度必须在8-16位之间',
+    strong: '密码必须包含字母、数字和特殊符号，密码长度必须在8-16位之间',
+    medium: '密码必须为字母、数字和特殊符号任意两种的组合，密码长度必须在8-16位之间',
+    weak: '密码必须包含字母，密码长度必须在6-16位之间'
+  }
+};
+function validPwd(password) {
+  //强度校验
+  if (passwordStrength && passwordRules[passwordStrength]) {
+    if (!new RegExp(passwordRules[passwordStrength]).test(password)) {
+      return ERROR.passwordStrengthError[passwordStrength];
+    }
+  }
+  return true;
+}
+function getPwdRules() {
+  var pwdName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'password';
+  var rePwdName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'password2';
+  var rules = {};
+  rules[pwdName] = {
+    rules: [{
+      required: true,
+      errorMessage: ERROR.normal.noPwd
+    }, {
+      validateFunction: function validateFunction(rule, value, data, callback) {
+        var checkRes = validPwd(value);
+        if (checkRes !== true) {
+          callback(checkRes);
+        }
+        return true;
+      }
+    }]
+  };
+  if (rePwdName) {
+    rules[rePwdName] = {
+      rules: [{
+        required: true,
+        errorMessage: ERROR.normal.noRePwd
+      }, {
+        validateFunction: function validateFunction(rule, value, data, callback) {
+          if (value != data[pwdName]) {
+            callback(ERROR.normal.rePwdErr);
+          }
+          return true;
+        }
+      }]
+    };
+  }
+  return rules;
+}
+var _default = {
+  ERROR: ERROR,
+  validPwd: validPwd,
+  getPwdRules: getPwdRules
+};
+exports.default = _default;
+
+/***/ }),
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */
+/*!************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(/*! ./objectWithoutPropertiesLoose.js */ 323);
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+module.exports = _objectWithoutProperties, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+/* 323 */
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
+module.exports = _objectWithoutPropertiesLoose, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+/* 324 */
+/*!********************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-id-pages/common/check-id-card.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+function checkIdCard(idCardNumber) {
+  if (!idCardNumber || typeof idCardNumber !== 'string' || idCardNumber.length !== 18) return false;
+  var coefficient = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+  var checkCode = [1, 0, 'x', 9, 8, 7, 6, 5, 4, 3, 2];
+  var code = idCardNumber.substring(17);
+  var sum = 0;
+  for (var i = 0; i < 17; i++) {
+    sum += Number(idCardNumber.charAt(i)) * coefficient[i];
+  }
+  return checkCode[sum % 11].toString() === code.toLowerCase();
+}
+var _default = checkIdCard;
+exports.default = _default;
+
+/***/ }),
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */
 /*!*******************************************************************************!*\
   !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-tabs/props.js ***!
   \*******************************************************************************/
@@ -26923,14 +27910,14 @@ exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */
 /*!***********************************************************************************!*\
   !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-skeleton/props.js ***!
   \***********************************************************************************/
@@ -27007,376 +27994,21 @@ exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */
-/*!*************************************************************************!*\
-  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/libs/mixin/button.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
-  props: {
-    lang: String,
-    sessionFrom: String,
-    sendMessageTitle: String,
-    sendMessagePath: String,
-    sendMessageImg: String,
-    showMessageCard: Boolean,
-    appParameter: String,
-    formType: String,
-    openType: String
-  }
-};
-exports.default = _default;
-
-/***/ }),
-/* 219 */
-/*!***************************************************************************!*\
-  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/libs/mixin/openType.js ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
-  props: {
-    openType: String
-  },
-  methods: {
-    onGetUserInfo: function onGetUserInfo(event) {
-      this.$emit('getuserinfo', event.detail);
-    },
-    onContact: function onContact(event) {
-      this.$emit('contact', event.detail);
-    },
-    onGetPhoneNumber: function onGetPhoneNumber(event) {
-      this.$emit('getphonenumber', event.detail);
-    },
-    onError: function onError(event) {
-      this.$emit('error', event.detail);
-    },
-    onLaunchApp: function onLaunchApp(event) {
-      this.$emit('launchapp', event.detail);
-    },
-    onOpenSetting: function onOpenSetting(event) {
-      this.$emit('opensetting', event.detail);
-    }
-  }
-};
-exports.default = _default;
-
-/***/ }),
-/* 220 */
-/*!*********************************************************************************!*\
-  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-button/props.js ***!
-  \*********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-/*
- * @Author       : LQ
- * @Description  :
- * @version      : 1.0
- * @Date         : 2021-08-16 10:04:04
- * @LastAuthor   : LQ
- * @lastTime     : 2021-08-16 10:04:24
- * @FilePath     : /u-view2.0/uview-ui/components/u-button/props.js
- */
-var _default = {
-  props: {
-    // 是否细边框
-    hairline: {
-      type: Boolean,
-      default: uni.$u.props.button.hairline
-    },
-    // 按钮的预置样式，info，primary，error，warning，success
-    type: {
-      type: String,
-      default: uni.$u.props.button.type
-    },
-    // 按钮尺寸，large，normal，small，mini
-    size: {
-      type: String,
-      default: uni.$u.props.button.size
-    },
-    // 按钮形状，circle（两边为半圆），square（带圆角）
-    shape: {
-      type: String,
-      default: uni.$u.props.button.shape
-    },
-    // 按钮是否镂空
-    plain: {
-      type: Boolean,
-      default: uni.$u.props.button.plain
-    },
-    // 是否禁止状态
-    disabled: {
-      type: Boolean,
-      default: uni.$u.props.button.disabled
-    },
-    // 是否加载中
-    loading: {
-      type: Boolean,
-      default: uni.$u.props.button.loading
-    },
-    // 加载中提示文字
-    loadingText: {
-      type: [String, Number],
-      default: uni.$u.props.button.loadingText
-    },
-    // 加载状态图标类型
-    loadingMode: {
-      type: String,
-      default: uni.$u.props.button.loadingMode
-    },
-    // 加载图标大小
-    loadingSize: {
-      type: [String, Number],
-      default: uni.$u.props.button.loadingSize
-    },
-    // 开放能力，具体请看uniapp稳定关于button组件部分说明
-    // https://uniapp.dcloud.io/component/button
-    openType: {
-      type: String,
-      default: uni.$u.props.button.openType
-    },
-    // 用于 <form> 组件，点击分别会触发 <form> 组件的 submit/reset 事件
-    // 取值为submit（提交表单），reset（重置表单）
-    formType: {
-      type: String,
-      default: uni.$u.props.button.formType
-    },
-    // 打开 APP 时，向 APP 传递的参数，open-type=launchApp时有效
-    // 只微信小程序、QQ小程序有效
-    appParameter: {
-      type: String,
-      default: uni.$u.props.button.appParameter
-    },
-    // 指定是否阻止本节点的祖先节点出现点击态，微信小程序有效
-    hoverStopPropagation: {
-      type: Boolean,
-      default: uni.$u.props.button.hoverStopPropagation
-    },
-    // 指定返回用户信息的语言，zh_CN 简体中文，zh_TW 繁体中文，en 英文。只微信小程序有效
-    lang: {
-      type: String,
-      default: uni.$u.props.button.lang
-    },
-    // 会话来源，open-type="contact"时有效。只微信小程序有效
-    sessionFrom: {
-      type: String,
-      default: uni.$u.props.button.sessionFrom
-    },
-    // 会话内消息卡片标题，open-type="contact"时有效
-    // 默认当前标题，只微信小程序有效
-    sendMessageTitle: {
-      type: String,
-      default: uni.$u.props.button.sendMessageTitle
-    },
-    // 会话内消息卡片点击跳转小程序路径，open-type="contact"时有效
-    // 默认当前分享路径，只微信小程序有效
-    sendMessagePath: {
-      type: String,
-      default: uni.$u.props.button.sendMessagePath
-    },
-    // 会话内消息卡片图片，open-type="contact"时有效
-    // 默认当前页面截图，只微信小程序有效
-    sendMessageImg: {
-      type: String,
-      default: uni.$u.props.button.sendMessageImg
-    },
-    // 是否显示会话内消息卡片，设置此参数为 true，用户进入客服会话会在右下角显示"可能要发送的小程序"提示，
-    // 用户点击后可以快速发送小程序消息，open-type="contact"时有效
-    showMessageCard: {
-      type: Boolean,
-      default: uni.$u.props.button.showMessageCard
-    },
-    // 额外传参参数，用于小程序的data-xxx属性，通过target.dataset.name获取
-    dataName: {
-      type: String,
-      default: uni.$u.props.button.dataName
-    },
-    // 节流，一定时间内只能触发一次
-    throttleTime: {
-      type: [String, Number],
-      default: uni.$u.props.button.throttleTime
-    },
-    // 按住后多久出现点击态，单位毫秒
-    hoverStartTime: {
-      type: [String, Number],
-      default: uni.$u.props.button.hoverStartTime
-    },
-    // 手指松开后点击态保留时间，单位毫秒
-    hoverStayTime: {
-      type: [String, Number],
-      default: uni.$u.props.button.hoverStayTime
-    },
-    // 按钮文字，之所以通过props传入，是因为slot传入的话
-    // nvue中无法控制文字的样式
-    text: {
-      type: [String, Number],
-      default: uni.$u.props.button.text
-    },
-    // 按钮图标
-    icon: {
-      type: String,
-      default: uni.$u.props.button.icon
-    },
-    // 按钮图标
-    iconColor: {
-      type: String,
-      default: uni.$u.props.button.icon
-    },
-    // 按钮颜色，支持传入linear-gradient渐变色
-    color: {
-      type: String,
-      default: uni.$u.props.button.color
-    }
-  }
-};
-exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
-
-/***/ }),
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */
-/*!********************************************************************************!*\
-  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-badge/props.js ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
-  props: {
-    // 是否显示圆点
-    isDot: {
-      type: Boolean,
-      default: uni.$u.props.badge.isDot
-    },
-    // 显示的内容
-    value: {
-      type: [Number, String],
-      default: uni.$u.props.badge.value
-    },
-    // 是否显示
-    show: {
-      type: Boolean,
-      default: uni.$u.props.badge.show
-    },
-    // 最大值，超过最大值会显示 '{max}+'
-    max: {
-      type: [Number, String],
-      default: uni.$u.props.badge.max
-    },
-    // 主题类型，error|warning|success|primary
-    type: {
-      type: String,
-      default: uni.$u.props.badge.type
-    },
-    // 当数值为 0 时，是否展示 Badge
-    showZero: {
-      type: Boolean,
-      default: uni.$u.props.badge.showZero
-    },
-    // 背景颜色，优先级比type高，如设置，type参数会失效
-    bgColor: {
-      type: [String, null],
-      default: uni.$u.props.badge.bgColor
-    },
-    // 字体颜色
-    color: {
-      type: [String, null],
-      default: uni.$u.props.badge.color
-    },
-    // 徽标形状，circle-四角均为圆角，horn-左下角为直角
-    shape: {
-      type: String,
-      default: uni.$u.props.badge.shape
-    },
-    // 设置数字的显示方式，overflow|ellipsis|limit
-    // overflow会根据max字段判断，超出显示`${max}+`
-    // ellipsis会根据max判断，超出显示`${max}...`
-    // limit会依据1000作为判断条件，超出1000，显示`${value/1000}K`，比如2.2k、3.34w，最多保留2位小数
-    numberType: {
-      type: String,
-      default: uni.$u.props.badge.numberType
-    },
-    // 设置badge的位置偏移，格式为 [x, y]，也即设置的为top和right的值，absolute为true时有效
-    offset: {
-      type: Array,
-      default: uni.$u.props.badge.offset
-    },
-    // 是否反转背景和字体颜色
-    inverted: {
-      type: Boolean,
-      default: uni.$u.props.badge.inverted
-    },
-    // 是否绝对定位
-    absolute: {
-      type: Boolean,
-      default: uni.$u.props.badge.absolute
-    }
-  }
-};
-exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
-
-/***/ }),
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */
 /*!***************************************************************************************************!*\
   !*** F:/wxProgram/cloudForum/uni_modules/uni-dateformat/components/uni-dateformat/date-format.js ***!
   \***************************************************************************************************/
@@ -27593,12 +28225,2855 @@ function friendlyDate(time, _ref) {
 }
 
 /***/ }),
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */
+/*!*************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/libs/mixin/button.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    lang: String,
+    sessionFrom: String,
+    sendMessageTitle: String,
+    sendMessagePath: String,
+    sendMessageImg: String,
+    showMessageCard: Boolean,
+    appParameter: String,
+    formType: String,
+    openType: String
+  }
+};
+exports.default = _default;
+
+/***/ }),
+/* 370 */
+/*!***************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/libs/mixin/openType.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    openType: String
+  },
+  methods: {
+    onGetUserInfo: function onGetUserInfo(event) {
+      this.$emit('getuserinfo', event.detail);
+    },
+    onContact: function onContact(event) {
+      this.$emit('contact', event.detail);
+    },
+    onGetPhoneNumber: function onGetPhoneNumber(event) {
+      this.$emit('getphonenumber', event.detail);
+    },
+    onError: function onError(event) {
+      this.$emit('error', event.detail);
+    },
+    onLaunchApp: function onLaunchApp(event) {
+      this.$emit('launchapp', event.detail);
+    },
+    onOpenSetting: function onOpenSetting(event) {
+      this.$emit('opensetting', event.detail);
+    }
+  }
+};
+exports.default = _default;
+
+/***/ }),
+/* 371 */
+/*!*********************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-button/props.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+/*
+ * @Author       : LQ
+ * @Description  :
+ * @version      : 1.0
+ * @Date         : 2021-08-16 10:04:04
+ * @LastAuthor   : LQ
+ * @lastTime     : 2021-08-16 10:04:24
+ * @FilePath     : /u-view2.0/uview-ui/components/u-button/props.js
+ */
+var _default = {
+  props: {
+    // 是否细边框
+    hairline: {
+      type: Boolean,
+      default: uni.$u.props.button.hairline
+    },
+    // 按钮的预置样式，info，primary，error，warning，success
+    type: {
+      type: String,
+      default: uni.$u.props.button.type
+    },
+    // 按钮尺寸，large，normal，small，mini
+    size: {
+      type: String,
+      default: uni.$u.props.button.size
+    },
+    // 按钮形状，circle（两边为半圆），square（带圆角）
+    shape: {
+      type: String,
+      default: uni.$u.props.button.shape
+    },
+    // 按钮是否镂空
+    plain: {
+      type: Boolean,
+      default: uni.$u.props.button.plain
+    },
+    // 是否禁止状态
+    disabled: {
+      type: Boolean,
+      default: uni.$u.props.button.disabled
+    },
+    // 是否加载中
+    loading: {
+      type: Boolean,
+      default: uni.$u.props.button.loading
+    },
+    // 加载中提示文字
+    loadingText: {
+      type: [String, Number],
+      default: uni.$u.props.button.loadingText
+    },
+    // 加载状态图标类型
+    loadingMode: {
+      type: String,
+      default: uni.$u.props.button.loadingMode
+    },
+    // 加载图标大小
+    loadingSize: {
+      type: [String, Number],
+      default: uni.$u.props.button.loadingSize
+    },
+    // 开放能力，具体请看uniapp稳定关于button组件部分说明
+    // https://uniapp.dcloud.io/component/button
+    openType: {
+      type: String,
+      default: uni.$u.props.button.openType
+    },
+    // 用于 <form> 组件，点击分别会触发 <form> 组件的 submit/reset 事件
+    // 取值为submit（提交表单），reset（重置表单）
+    formType: {
+      type: String,
+      default: uni.$u.props.button.formType
+    },
+    // 打开 APP 时，向 APP 传递的参数，open-type=launchApp时有效
+    // 只微信小程序、QQ小程序有效
+    appParameter: {
+      type: String,
+      default: uni.$u.props.button.appParameter
+    },
+    // 指定是否阻止本节点的祖先节点出现点击态，微信小程序有效
+    hoverStopPropagation: {
+      type: Boolean,
+      default: uni.$u.props.button.hoverStopPropagation
+    },
+    // 指定返回用户信息的语言，zh_CN 简体中文，zh_TW 繁体中文，en 英文。只微信小程序有效
+    lang: {
+      type: String,
+      default: uni.$u.props.button.lang
+    },
+    // 会话来源，open-type="contact"时有效。只微信小程序有效
+    sessionFrom: {
+      type: String,
+      default: uni.$u.props.button.sessionFrom
+    },
+    // 会话内消息卡片标题，open-type="contact"时有效
+    // 默认当前标题，只微信小程序有效
+    sendMessageTitle: {
+      type: String,
+      default: uni.$u.props.button.sendMessageTitle
+    },
+    // 会话内消息卡片点击跳转小程序路径，open-type="contact"时有效
+    // 默认当前分享路径，只微信小程序有效
+    sendMessagePath: {
+      type: String,
+      default: uni.$u.props.button.sendMessagePath
+    },
+    // 会话内消息卡片图片，open-type="contact"时有效
+    // 默认当前页面截图，只微信小程序有效
+    sendMessageImg: {
+      type: String,
+      default: uni.$u.props.button.sendMessageImg
+    },
+    // 是否显示会话内消息卡片，设置此参数为 true，用户进入客服会话会在右下角显示"可能要发送的小程序"提示，
+    // 用户点击后可以快速发送小程序消息，open-type="contact"时有效
+    showMessageCard: {
+      type: Boolean,
+      default: uni.$u.props.button.showMessageCard
+    },
+    // 额外传参参数，用于小程序的data-xxx属性，通过target.dataset.name获取
+    dataName: {
+      type: String,
+      default: uni.$u.props.button.dataName
+    },
+    // 节流，一定时间内只能触发一次
+    throttleTime: {
+      type: [String, Number],
+      default: uni.$u.props.button.throttleTime
+    },
+    // 按住后多久出现点击态，单位毫秒
+    hoverStartTime: {
+      type: [String, Number],
+      default: uni.$u.props.button.hoverStartTime
+    },
+    // 手指松开后点击态保留时间，单位毫秒
+    hoverStayTime: {
+      type: [String, Number],
+      default: uni.$u.props.button.hoverStayTime
+    },
+    // 按钮文字，之所以通过props传入，是因为slot传入的话
+    // nvue中无法控制文字的样式
+    text: {
+      type: [String, Number],
+      default: uni.$u.props.button.text
+    },
+    // 按钮图标
+    icon: {
+      type: String,
+      default: uni.$u.props.button.icon
+    },
+    // 按钮图标
+    iconColor: {
+      type: String,
+      default: uni.$u.props.button.icon
+    },
+    // 按钮颜色，支持传入linear-gradient渐变色
+    color: {
+      type: String,
+      default: uni.$u.props.button.color
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */,
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */
+/*!***********************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-popup/components/uni-popup/popup.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  data: function data() {
+    return {};
+  },
+  created: function created() {
+    this.popup = this.getParent();
+  },
+  methods: {
+    /**
+     * 获取父元素实例
+     */
+    getParent: function getParent() {
+      var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'uniPopup';
+      var parent = this.$parent;
+      var parentName = parent.$options.name;
+      while (parentName !== name) {
+        parent = parent.$parent;
+        if (!parent) return false;
+        parentName = parent.$options.name;
+      }
+      return parent;
+    }
+  }
+};
+exports.default = _default;
+
+/***/ }),
+/* 408 */
+/*!****************************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-popup/components/uni-popup/i18n/index.js ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 409));
+var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 410));
+var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 411));
+var _default = {
+  en: _en.default,
+  'zh-Hans': _zhHans.default,
+  'zh-Hant': _zhHant.default
+};
+exports.default = _default;
+
+/***/ }),
+/* 409 */
+/*!***************************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-popup/components/uni-popup/i18n/en.json ***!
+  \***************************************************************************************/
+/*! exports provided: uni-popup.cancel, uni-popup.ok, uni-popup.placeholder, uni-popup.title, uni-popup.shareTitle, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"uni-popup.cancel\":\"cancel\",\"uni-popup.ok\":\"ok\",\"uni-popup.placeholder\":\"pleace enter\",\"uni-popup.title\":\"Hint\",\"uni-popup.shareTitle\":\"Share to\"}");
+
+/***/ }),
+/* 410 */
+/*!********************************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-popup/components/uni-popup/i18n/zh-Hans.json ***!
+  \********************************************************************************************/
+/*! exports provided: uni-popup.cancel, uni-popup.ok, uni-popup.placeholder, uni-popup.title, uni-popup.shareTitle, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"uni-popup.cancel\":\"取消\",\"uni-popup.ok\":\"确定\",\"uni-popup.placeholder\":\"请输入\",\"uni-popup.title\":\"提示\",\"uni-popup.shareTitle\":\"分享到\"}");
+
+/***/ }),
+/* 411 */
+/*!********************************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-popup/components/uni-popup/i18n/zh-Hant.json ***!
+  \********************************************************************************************/
+/*! exports provided: uni-popup.cancel, uni-popup.ok, uni-popup.placeholder, uni-popup.title, uni-popup.shareTitle, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"uni-popup.cancel\":\"取消\",\"uni-popup.ok\":\"確定\",\"uni-popup.placeholder\":\"請輸入\",\"uni-popup.title\":\"提示\",\"uni-popup.shareTitle\":\"分享到\"}");
+
+/***/ }),
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */
+/*!******************************************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-id-pages/pages/userinfo/cropImage/limeClipper/utils.js ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.calcImageOffset = calcImageOffset;
+exports.calcImageScale = calcImageScale;
+exports.calcImageSize = calcImageSize;
+exports.calcPythagoreanTheorem = calcPythagoreanTheorem;
+exports.clipTouchMoveOfCalculate = clipTouchMoveOfCalculate;
+exports.determineDirection = determineDirection;
+exports.imageTouchMoveOfCalcOffset = imageTouchMoveOfCalcOffset;
+/**
+ * 判断手指触摸位置
+ */
+function determineDirection(clipX, clipY, clipWidth, clipHeight, currentX, currentY) {
+  /*
+   * (右下>>1 右上>>2 左上>>3 左下>>4)
+   */
+  var corner;
+  /**
+   * 思路：（利用直角坐标系）
+   *  1.找出裁剪框中心点
+   *  2.如点击坐标在上方点与左方点区域内，则点击为左上角
+   *  3.如点击坐标在下方点与右方点区域内，则点击为右下角
+   *  4.其他角同理
+   */
+  var mainPoint = [clipX + clipWidth / 2, clipY + clipHeight / 2]; // 中心点
+  var currentPoint = [currentX, currentY]; // 触摸点
+
+  if (currentPoint[0] <= mainPoint[0] && currentPoint[1] <= mainPoint[1]) {
+    corner = 3; // 左上
+  } else if (currentPoint[0] >= mainPoint[0] && currentPoint[1] <= mainPoint[1]) {
+    corner = 2; // 右上
+  } else if (currentPoint[0] <= mainPoint[0] && currentPoint[1] >= mainPoint[1]) {
+    corner = 4; // 左下
+  } else if (currentPoint[0] >= mainPoint[0] && currentPoint[1] >= mainPoint[1]) {
+    corner = 1; // 右下
+  }
+
+  return corner;
+}
+
+/**
+ * 图片边缘检测检测时，计算图片偏移量
+ */
+function calcImageOffset(data, scale) {
+  var left = data.imageLeft;
+  var top = data.imageTop;
+  scale = scale || data.scale;
+  var imageWidth = data.imageWidth;
+  var imageHeight = data.imageHeight;
+  if (data.angle / 90 % 2) {
+    imageWidth = data.imageHeight;
+    imageHeight = data.imageWidth;
+  }
+  var clipX = data.clipX,
+    clipWidth = data.clipWidth,
+    clipY = data.clipY,
+    clipHeight = data.clipHeight;
+
+  // 当前图片宽度/高度
+  var currentImageSize = function currentImageSize(size) {
+    return size * scale / 2;
+  };
+  var currentImageWidth = currentImageSize(imageWidth);
+  var currentImageHeight = currentImageSize(imageHeight);
+  left = clipX + currentImageWidth >= left ? left : clipX + currentImageWidth;
+  left = clipX + clipWidth - currentImageWidth <= left ? left : clipX + clipWidth - currentImageWidth;
+  top = clipY + currentImageHeight >= top ? top : clipY + currentImageHeight;
+  top = clipY + clipHeight - currentImageHeight <= top ? top : clipY + clipHeight - currentImageHeight;
+  return {
+    left: left,
+    top: top,
+    scale: scale
+  };
+}
+
+/**
+ * 图片边缘检测时，计算图片缩放比例
+ */
+function calcImageScale(data, scale) {
+  scale = scale || data.scale;
+  var imageWidth = data.imageWidth,
+    imageHeight = data.imageHeight,
+    clipWidth = data.clipWidth,
+    clipHeight = data.clipHeight,
+    angle = data.angle;
+  if (angle / 90 % 2) {
+    imageWidth = imageHeight;
+    imageHeight = imageWidth;
+  }
+  if (imageWidth * scale < clipWidth) {
+    scale = clipWidth / imageWidth;
+  }
+  if (imageHeight * scale < clipHeight) {
+    scale = Math.max(scale, clipHeight / imageHeight);
+  }
+  return scale;
+}
+
+/**
+ * 计算图片尺寸
+ */
+function calcImageSize(width, height, data) {
+  var imageWidth = width,
+    imageHeight = height;
+  var clipWidth = data.clipWidth,
+    clipHeight = data.clipHeight,
+    sysinfo = data.sysinfo,
+    originWidth = data.width,
+    originHeight = data.height;
+  if (imageWidth && imageHeight) {
+    if (imageWidth / imageHeight > (clipWidth || originWidth) / (clipWidth || originHeight)) {
+      imageHeight = clipHeight || originHeight;
+      imageWidth = width / height * imageHeight;
+    } else {
+      imageWidth = clipWidth || originWidth;
+      imageHeight = height / width * imageWidth;
+    }
+  } else {
+    var sys = sysinfo || uni.getSystemInfoSync();
+    imageWidth = sys.windowWidth;
+    imageHeight = 0;
+  }
+  return {
+    imageWidth: imageWidth,
+    imageHeight: imageHeight
+  };
+}
+
+/**
+ * 勾股定理求斜边
+ */
+function calcPythagoreanTheorem(width, height) {
+  return Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
+}
+
+/**
+ * 拖动裁剪框时计算
+ */
+function clipTouchMoveOfCalculate(data, event) {
+  var clientX = event.touches[0].clientX;
+  var clientY = event.touches[0].clientY;
+  var clipWidth = data.clipWidth,
+    clipHeight = data.clipHeight,
+    oldClipY = data.clipY,
+    oldClipX = data.clipX,
+    clipStart = data.clipStart,
+    isLockRatio = data.isLockRatio,
+    maxWidth = data.maxWidth,
+    minWidth = data.minWidth,
+    maxHeight = data.maxHeight,
+    minHeight = data.minHeight;
+  maxWidth = maxWidth / 2;
+  minWidth = minWidth / 2;
+  minHeight = minHeight / 2;
+  maxHeight = maxHeight / 2;
+  var width = clipWidth,
+    height = clipHeight,
+    clipY = oldClipY,
+    clipX = oldClipX,
+    // 获取裁剪框实际宽度/高度
+    // 如果大于最大值则使用最大值
+    // 如果小于最小值则使用最小值
+    sizecorrect = function sizecorrect() {
+      width = width <= maxWidth ? width >= minWidth ? width : minWidth : maxWidth;
+      height = height <= maxHeight ? height >= minHeight ? height : minHeight : maxHeight;
+    },
+    sizeinspect = function sizeinspect() {
+      sizecorrect();
+      if ((width > maxWidth || width < minWidth || height > maxHeight || height < minHeight) && isLockRatio) {
+        return false;
+      } else {
+        return true;
+      }
+    };
+  //if (clipStart.corner) {
+  height = clipStart.height + (clipStart.corner > 1 && clipStart.corner < 4 ? 1 : -1) * (clipStart.y - clientY);
+  //}
+  switch (clipStart.corner) {
+    case 1:
+      width = clipStart.width - clipStart.x + clientX;
+      if (isLockRatio) {
+        height = width / (clipWidth / clipHeight);
+      }
+      if (!sizeinspect()) return;
+      break;
+    case 2:
+      width = clipStart.width - clipStart.x + clientX;
+      if (isLockRatio) {
+        height = width / (clipWidth / clipHeight);
+      }
+      if (!sizeinspect()) {
+        return;
+      } else {
+        clipY = clipStart.clipY - (height - clipStart.height);
+      }
+      break;
+    case 3:
+      width = clipStart.width + clipStart.x - clientX;
+      if (isLockRatio) {
+        height = width / (clipWidth / clipHeight);
+      }
+      if (!sizeinspect()) {
+        return;
+      } else {
+        clipY = clipStart.clipY - (height - clipStart.height);
+        clipX = clipStart.clipX - (width - clipStart.width);
+      }
+      break;
+    case 4:
+      width = clipStart.width + clipStart.x - clientX;
+      if (isLockRatio) {
+        height = width / (clipWidth / clipHeight);
+      }
+      if (!sizeinspect()) {
+        return;
+      } else {
+        clipX = clipStart.clipX - (width - clipStart.width);
+      }
+      break;
+    default:
+      break;
+  }
+  return {
+    width: width,
+    height: height,
+    clipX: clipX,
+    clipY: clipY
+  };
+}
+
+/**
+ * 单指拖动图片计算偏移
+ */
+function imageTouchMoveOfCalcOffset(data, clientXForLeft, clientYForLeft) {
+  var left = clientXForLeft - data.touchRelative[0].x,
+    top = clientYForLeft - data.touchRelative[0].y;
+  return {
+    left: left,
+    top: top
+  };
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */
+/*!**************************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-forms/components/uni-forms/validate.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 28));
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ 32));
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ 33));
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ 34));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 31));
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ 23));
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ 24));
+var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ 13));
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+var pattern = {
+  email: /^\S+?@\S+?\.\S+?$/,
+  idcard: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+  url: new RegExp("^(?!mailto:)(?:(?:http|https|ftp)://|//)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$", 'i')
+};
+var FORMAT_MAPPING = {
+  "int": 'integer',
+  "bool": 'boolean',
+  "double": 'number',
+  "long": 'number',
+  "password": 'string'
+  // "fileurls": 'array'
+};
+
+function formatMessage(args) {
+  var resources = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var defaultMessage = ['label'];
+  defaultMessage.forEach(function (item) {
+    if (args[item] === undefined) {
+      args[item] = '';
+    }
+  });
+  var str = resources;
+  for (var key in args) {
+    var reg = new RegExp('{' + key + '}');
+    str = str.replace(reg, args[key]);
+  }
+  return str;
+}
+function isEmptyValue(value, type) {
+  if (value === undefined || value === null) {
+    return true;
+  }
+  if (typeof value === 'string' && !value) {
+    return true;
+  }
+  if (Array.isArray(value) && !value.length) {
+    return true;
+  }
+  if (type === 'object' && !Object.keys(value).length) {
+    return true;
+  }
+  return false;
+}
+var types = {
+  integer: function integer(value) {
+    return types.number(value) && parseInt(value, 10) === value;
+  },
+  string: function string(value) {
+    return typeof value === 'string';
+  },
+  number: function number(value) {
+    if (isNaN(value)) {
+      return false;
+    }
+    return typeof value === 'number';
+  },
+  "boolean": function boolean(value) {
+    return typeof value === 'boolean';
+  },
+  "float": function float(value) {
+    return types.number(value) && !types.integer(value);
+  },
+  array: function array(value) {
+    return Array.isArray(value);
+  },
+  object: function object(value) {
+    return (0, _typeof2.default)(value) === 'object' && !types.array(value);
+  },
+  date: function date(value) {
+    return value instanceof Date;
+  },
+  timestamp: function timestamp(value) {
+    if (!this.integer(value) || Math.abs(value).toString().length > 16) {
+      return false;
+    }
+    return true;
+  },
+  file: function file(value) {
+    return typeof value.url === 'string';
+  },
+  email: function email(value) {
+    return typeof value === 'string' && !!value.match(pattern.email) && value.length < 255;
+  },
+  url: function url(value) {
+    return typeof value === 'string' && !!value.match(pattern.url);
+  },
+  pattern: function pattern(reg, value) {
+    try {
+      return new RegExp(reg).test(value);
+    } catch (e) {
+      return false;
+    }
+  },
+  method: function method(value) {
+    return typeof value === 'function';
+  },
+  idcard: function idcard(value) {
+    return typeof value === 'string' && !!value.match(pattern.idcard);
+  },
+  'url-https': function urlHttps(value) {
+    return this.url(value) && value.startsWith('https://');
+  },
+  'url-scheme': function urlScheme(value) {
+    return value.startsWith('://');
+  },
+  'url-web': function urlWeb(value) {
+    return false;
+  }
+};
+var RuleValidator = /*#__PURE__*/function () {
+  function RuleValidator(message) {
+    (0, _classCallCheck2.default)(this, RuleValidator);
+    this._message = message;
+  }
+  (0, _createClass2.default)(RuleValidator, [{
+    key: "validateRule",
+    value: function () {
+      var _validateRule = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(fieldKey, fieldValue, value, data, allData) {
+        var result, rules, hasRequired, message, i, rule, vt, now, resultExpr;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                result = null;
+                rules = fieldValue.rules;
+                hasRequired = rules.findIndex(function (item) {
+                  return item.required;
+                });
+                if (!(hasRequired < 0)) {
+                  _context.next = 8;
+                  break;
+                }
+                if (!(value === null || value === undefined)) {
+                  _context.next = 6;
+                  break;
+                }
+                return _context.abrupt("return", result);
+              case 6:
+                if (!(typeof value === 'string' && !value.length)) {
+                  _context.next = 8;
+                  break;
+                }
+                return _context.abrupt("return", result);
+              case 8:
+                message = this._message;
+                if (!(rules === undefined)) {
+                  _context.next = 11;
+                  break;
+                }
+                return _context.abrupt("return", message['default']);
+              case 11:
+                i = 0;
+              case 12:
+                if (!(i < rules.length)) {
+                  _context.next = 35;
+                  break;
+                }
+                rule = rules[i];
+                vt = this._getValidateType(rule);
+                Object.assign(rule, {
+                  label: fieldValue.label || "[\"".concat(fieldKey, "\"]")
+                });
+                if (!RuleValidatorHelper[vt]) {
+                  _context.next = 20;
+                  break;
+                }
+                result = RuleValidatorHelper[vt](rule, value, message);
+                if (!(result != null)) {
+                  _context.next = 20;
+                  break;
+                }
+                return _context.abrupt("break", 35);
+              case 20:
+                if (!rule.validateExpr) {
+                  _context.next = 26;
+                  break;
+                }
+                now = Date.now();
+                resultExpr = rule.validateExpr(value, allData, now);
+                if (!(resultExpr === false)) {
+                  _context.next = 26;
+                  break;
+                }
+                result = this._getMessage(rule, rule.errorMessage || this._message['default']);
+                return _context.abrupt("break", 35);
+              case 26:
+                if (!rule.validateFunction) {
+                  _context.next = 32;
+                  break;
+                }
+                _context.next = 29;
+                return this.validateFunction(rule, value, data, allData, vt);
+              case 29:
+                result = _context.sent;
+                if (!(result !== null)) {
+                  _context.next = 32;
+                  break;
+                }
+                return _context.abrupt("break", 35);
+              case 32:
+                i++;
+                _context.next = 12;
+                break;
+              case 35:
+                if (result !== null) {
+                  result = message.TAG + result;
+                }
+                return _context.abrupt("return", result);
+              case 37:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+      function validateRule(_x, _x2, _x3, _x4, _x5) {
+        return _validateRule.apply(this, arguments);
+      }
+      return validateRule;
+    }()
+  }, {
+    key: "validateFunction",
+    value: function () {
+      var _validateFunction = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(rule, value, data, allData, vt) {
+        var result, callbackMessage, res;
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                result = null;
+                _context2.prev = 1;
+                callbackMessage = null;
+                _context2.next = 5;
+                return rule.validateFunction(rule, value, allData || data, function (message) {
+                  callbackMessage = message;
+                });
+              case 5:
+                res = _context2.sent;
+                if (callbackMessage || typeof res === 'string' && res || res === false) {
+                  result = this._getMessage(rule, callbackMessage || res, vt);
+                }
+                _context2.next = 12;
+                break;
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](1);
+                result = this._getMessage(rule, _context2.t0.message, vt);
+              case 12:
+                return _context2.abrupt("return", result);
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[1, 9]]);
+      }));
+      function validateFunction(_x6, _x7, _x8, _x9, _x10) {
+        return _validateFunction.apply(this, arguments);
+      }
+      return validateFunction;
+    }()
+  }, {
+    key: "_getMessage",
+    value: function _getMessage(rule, message, vt) {
+      return formatMessage(rule, message || rule.errorMessage || this._message[vt] || message['default']);
+    }
+  }, {
+    key: "_getValidateType",
+    value: function _getValidateType(rule) {
+      var result = '';
+      if (rule.required) {
+        result = 'required';
+      } else if (rule.format) {
+        result = 'format';
+      } else if (rule.arrayType) {
+        result = 'arrayTypeFormat';
+      } else if (rule.range) {
+        result = 'range';
+      } else if (rule.maximum !== undefined || rule.minimum !== undefined) {
+        result = 'rangeNumber';
+      } else if (rule.maxLength !== undefined || rule.minLength !== undefined) {
+        result = 'rangeLength';
+      } else if (rule.pattern) {
+        result = 'pattern';
+      } else if (rule.validateFunction) {
+        result = 'validateFunction';
+      }
+      return result;
+    }
+  }]);
+  return RuleValidator;
+}();
+var RuleValidatorHelper = {
+  required: function required(rule, value, message) {
+    if (rule.required && isEmptyValue(value, rule.format || (0, _typeof2.default)(value))) {
+      return formatMessage(rule, rule.errorMessage || message.required);
+    }
+    return null;
+  },
+  range: function range(rule, value, message) {
+    var range = rule.range,
+      errorMessage = rule.errorMessage;
+    var list = new Array(range.length);
+    for (var i = 0; i < range.length; i++) {
+      var item = range[i];
+      if (types.object(item) && item.value !== undefined) {
+        list[i] = item.value;
+      } else {
+        list[i] = item;
+      }
+    }
+    var result = false;
+    if (Array.isArray(value)) {
+      result = new Set(value.concat(list)).size === list.length;
+    } else {
+      if (list.indexOf(value) > -1) {
+        result = true;
+      }
+    }
+    if (!result) {
+      return formatMessage(rule, errorMessage || message['enum']);
+    }
+    return null;
+  },
+  rangeNumber: function rangeNumber(rule, value, message) {
+    if (!types.number(value)) {
+      return formatMessage(rule, rule.errorMessage || message.pattern.mismatch);
+    }
+    var minimum = rule.minimum,
+      maximum = rule.maximum,
+      exclusiveMinimum = rule.exclusiveMinimum,
+      exclusiveMaximum = rule.exclusiveMaximum;
+    var min = exclusiveMinimum ? value <= minimum : value < minimum;
+    var max = exclusiveMaximum ? value >= maximum : value > maximum;
+    if (minimum !== undefined && min) {
+      return formatMessage(rule, rule.errorMessage || message['number'][exclusiveMinimum ? 'exclusiveMinimum' : 'minimum']);
+    } else if (maximum !== undefined && max) {
+      return formatMessage(rule, rule.errorMessage || message['number'][exclusiveMaximum ? 'exclusiveMaximum' : 'maximum']);
+    } else if (minimum !== undefined && maximum !== undefined && (min || max)) {
+      return formatMessage(rule, rule.errorMessage || message['number'].range);
+    }
+    return null;
+  },
+  rangeLength: function rangeLength(rule, value, message) {
+    if (!types.string(value) && !types.array(value)) {
+      return formatMessage(rule, rule.errorMessage || message.pattern.mismatch);
+    }
+    var min = rule.minLength;
+    var max = rule.maxLength;
+    var val = value.length;
+    if (min !== undefined && val < min) {
+      return formatMessage(rule, rule.errorMessage || message['length'].minLength);
+    } else if (max !== undefined && val > max) {
+      return formatMessage(rule, rule.errorMessage || message['length'].maxLength);
+    } else if (min !== undefined && max !== undefined && (val < min || val > max)) {
+      return formatMessage(rule, rule.errorMessage || message['length'].range);
+    }
+    return null;
+  },
+  pattern: function pattern(rule, value, message) {
+    if (!types['pattern'](rule.pattern, value)) {
+      return formatMessage(rule, rule.errorMessage || message.pattern.mismatch);
+    }
+    return null;
+  },
+  format: function format(rule, value, message) {
+    var customTypes = Object.keys(types);
+    var format = FORMAT_MAPPING[rule.format] ? FORMAT_MAPPING[rule.format] : rule.format || rule.arrayType;
+    if (customTypes.indexOf(format) > -1) {
+      if (!types[format](value)) {
+        return formatMessage(rule, rule.errorMessage || message.typeError);
+      }
+    }
+    return null;
+  },
+  arrayTypeFormat: function arrayTypeFormat(rule, value, message) {
+    if (!Array.isArray(value)) {
+      return formatMessage(rule, rule.errorMessage || message.typeError);
+    }
+    for (var i = 0; i < value.length; i++) {
+      var element = value[i];
+      var formatResult = this.format(rule, element, message);
+      if (formatResult !== null) {
+        return formatResult;
+      }
+    }
+    return null;
+  }
+};
+var SchemaValidator = /*#__PURE__*/function (_RuleValidator) {
+  (0, _inherits2.default)(SchemaValidator, _RuleValidator);
+  var _super = _createSuper(SchemaValidator);
+  function SchemaValidator(schema, options) {
+    var _this;
+    (0, _classCallCheck2.default)(this, SchemaValidator);
+    _this = _super.call(this, SchemaValidator.message);
+    _this._schema = schema;
+    _this._options = options || null;
+    return _this;
+  }
+  (0, _createClass2.default)(SchemaValidator, [{
+    key: "updateSchema",
+    value: function updateSchema(schema) {
+      this._schema = schema;
+    }
+  }, {
+    key: "validate",
+    value: function () {
+      var _validate = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(data, allData) {
+        var result;
+        return _regenerator.default.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                result = this._checkFieldInSchema(data);
+                if (result) {
+                  _context3.next = 5;
+                  break;
+                }
+                _context3.next = 4;
+                return this.invokeValidate(data, false, allData);
+              case 4:
+                result = _context3.sent;
+              case 5:
+                return _context3.abrupt("return", result.length ? result[0] : null);
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+      function validate(_x11, _x12) {
+        return _validate.apply(this, arguments);
+      }
+      return validate;
+    }()
+  }, {
+    key: "validateAll",
+    value: function () {
+      var _validateAll = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee4(data, allData) {
+        var result;
+        return _regenerator.default.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                result = this._checkFieldInSchema(data);
+                if (result) {
+                  _context4.next = 5;
+                  break;
+                }
+                _context4.next = 4;
+                return this.invokeValidate(data, true, allData);
+              case 4:
+                result = _context4.sent;
+              case 5:
+                return _context4.abrupt("return", result);
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+      function validateAll(_x13, _x14) {
+        return _validateAll.apply(this, arguments);
+      }
+      return validateAll;
+    }()
+  }, {
+    key: "validateUpdate",
+    value: function () {
+      var _validateUpdate = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee5(data, allData) {
+        var result;
+        return _regenerator.default.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                result = this._checkFieldInSchema(data);
+                if (result) {
+                  _context5.next = 5;
+                  break;
+                }
+                _context5.next = 4;
+                return this.invokeValidateUpdate(data, false, allData);
+              case 4:
+                result = _context5.sent;
+              case 5:
+                return _context5.abrupt("return", result.length ? result[0] : null);
+              case 6:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+      function validateUpdate(_x15, _x16) {
+        return _validateUpdate.apply(this, arguments);
+      }
+      return validateUpdate;
+    }()
+  }, {
+    key: "invokeValidate",
+    value: function () {
+      var _invokeValidate = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee6(data, all, allData) {
+        var result, schema, key, value, errorMessage;
+        return _regenerator.default.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                result = [];
+                schema = this._schema;
+                _context6.t0 = _regenerator.default.keys(schema);
+              case 3:
+                if ((_context6.t1 = _context6.t0()).done) {
+                  _context6.next = 15;
+                  break;
+                }
+                key = _context6.t1.value;
+                value = schema[key];
+                _context6.next = 8;
+                return this.validateRule(key, value, data[key], data, allData);
+              case 8:
+                errorMessage = _context6.sent;
+                if (!(errorMessage != null)) {
+                  _context6.next = 13;
+                  break;
+                }
+                result.push({
+                  key: key,
+                  errorMessage: errorMessage
+                });
+                if (all) {
+                  _context6.next = 13;
+                  break;
+                }
+                return _context6.abrupt("break", 15);
+              case 13:
+                _context6.next = 3;
+                break;
+              case 15:
+                return _context6.abrupt("return", result);
+              case 16:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+      function invokeValidate(_x17, _x18, _x19) {
+        return _invokeValidate.apply(this, arguments);
+      }
+      return invokeValidate;
+    }()
+  }, {
+    key: "invokeValidateUpdate",
+    value: function () {
+      var _invokeValidateUpdate = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee7(data, all, allData) {
+        var result, key, errorMessage;
+        return _regenerator.default.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                result = [];
+                _context7.t0 = _regenerator.default.keys(data);
+              case 2:
+                if ((_context7.t1 = _context7.t0()).done) {
+                  _context7.next = 13;
+                  break;
+                }
+                key = _context7.t1.value;
+                _context7.next = 6;
+                return this.validateRule(key, this._schema[key], data[key], data, allData);
+              case 6:
+                errorMessage = _context7.sent;
+                if (!(errorMessage != null)) {
+                  _context7.next = 11;
+                  break;
+                }
+                result.push({
+                  key: key,
+                  errorMessage: errorMessage
+                });
+                if (all) {
+                  _context7.next = 11;
+                  break;
+                }
+                return _context7.abrupt("break", 13);
+              case 11:
+                _context7.next = 2;
+                break;
+              case 13:
+                return _context7.abrupt("return", result);
+              case 14:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+      function invokeValidateUpdate(_x20, _x21, _x22) {
+        return _invokeValidateUpdate.apply(this, arguments);
+      }
+      return invokeValidateUpdate;
+    }()
+  }, {
+    key: "_checkFieldInSchema",
+    value: function _checkFieldInSchema(data) {
+      var keys = Object.keys(data);
+      var keys2 = Object.keys(this._schema);
+      if (new Set(keys.concat(keys2)).size === keys2.length) {
+        return '';
+      }
+      var noExistFields = keys.filter(function (key) {
+        return keys2.indexOf(key) < 0;
+      });
+      var errorMessage = formatMessage({
+        field: JSON.stringify(noExistFields)
+      }, SchemaValidator.message.TAG + SchemaValidator.message['defaultInvalid']);
+      return [{
+        key: 'invalid',
+        errorMessage: errorMessage
+      }];
+    }
+  }]);
+  return SchemaValidator;
+}(RuleValidator);
+function Message() {
+  return {
+    TAG: "",
+    default: '验证错误',
+    defaultInvalid: '提交的字段{field}在数据库中并不存在',
+    validateFunction: '验证无效',
+    required: '{label}必填',
+    'enum': '{label}超出范围',
+    timestamp: '{label}格式无效',
+    whitespace: '{label}不能为空',
+    typeError: '{label}类型无效',
+    date: {
+      format: '{label}日期{value}格式无效',
+      parse: '{label}日期无法解析,{value}无效',
+      invalid: '{label}日期{value}无效'
+    },
+    length: {
+      minLength: '{label}长度不能少于{minLength}',
+      maxLength: '{label}长度不能超过{maxLength}',
+      range: '{label}必须介于{minLength}和{maxLength}之间'
+    },
+    number: {
+      minimum: '{label}不能小于{minimum}',
+      maximum: '{label}不能大于{maximum}',
+      exclusiveMinimum: '{label}不能小于等于{minimum}',
+      exclusiveMaximum: '{label}不能大于等于{maximum}',
+      range: '{label}必须介于{minimum}and{maximum}之间'
+    },
+    pattern: {
+      mismatch: '{label}格式不匹配'
+    }
+  };
+}
+SchemaValidator.message = new Message();
+var _default = SchemaValidator;
+exports.default = _default;
+
+/***/ }),
+/* 470 */
+/*!***********************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-forms/components/uni-forms/utils.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.typeFilter = exports.type = exports.setDataValue = exports.realName = exports.rawData = exports.objSet = exports.objGet = exports.name2arr = exports.isRequiredField = exports.isRealName = exports.isNumber = exports.isEqual = exports.isBoolean = exports.getValue = exports.getDataValueType = exports.getDataValue = exports.deepCopy = void 0;
+var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ 13));
+/**
+ * 简单处理对象拷贝
+ * @param {Obejct} 被拷贝对象
+ * @@return {Object} 拷贝对象
+ */
+var deepCopy = function deepCopy(val) {
+  return JSON.parse(JSON.stringify(val));
+};
+/**
+ * 过滤数字类型
+ * @param {String} format 数字类型
+ * @@return {Boolean} 返回是否为数字类型
+ */
+exports.deepCopy = deepCopy;
+var typeFilter = function typeFilter(format) {
+  return format === 'int' || format === 'double' || format === 'number' || format === 'timestamp';
+};
+
+/**
+ * 把 value 转换成指定的类型，用于处理初始值，原因是初始值需要入库不能为 undefined
+ * @param {String} key 字段名
+ * @param {any} value 字段值
+ * @param {Object} rules 表单校验规则
+ */
+exports.typeFilter = typeFilter;
+var getValue = function getValue(key, value, rules) {
+  var isRuleNumType = rules.find(function (val) {
+    return val.format && typeFilter(val.format);
+  });
+  var isRuleBoolType = rules.find(function (val) {
+    return val.format && val.format === 'boolean' || val.format === 'bool';
+  });
+  // 输入类型为 number
+  if (!!isRuleNumType) {
+    if (!value && value !== 0) {
+      value = null;
+    } else {
+      value = isNumber(Number(value)) ? Number(value) : value;
+    }
+  }
+
+  // 输入类型为 boolean
+  if (!!isRuleBoolType) {
+    value = isBoolean(value) ? value : false;
+  }
+  return value;
+};
+
+/**
+ * 获取表单数据
+ * @param {String|Array} name 真实名称，需要使用 realName 获取
+ * @param {Object} data 原始数据
+ * @param {any} value  需要设置的值
+ */
+exports.getValue = getValue;
+var setDataValue = function setDataValue(field, formdata, value) {
+  formdata[field] = value;
+  return value || '';
+};
+
+/**
+ * 获取表单数据
+ * @param {String|Array} field 真实名称，需要使用 realName 获取
+ * @param {Object} data 原始数据
+ */
+exports.setDataValue = setDataValue;
+var getDataValue = function getDataValue(field, data) {
+  return objGet(data, field);
+};
+
+/**
+ * 获取表单类型
+ * @param {String|Array} field 真实名称，需要使用 realName 获取
+ */
+exports.getDataValue = getDataValue;
+var getDataValueType = function getDataValueType(field, data) {
+  var value = getDataValue(field, data);
+  return {
+    type: type(value),
+    value: value
+  };
+};
+
+/**
+ * 获取表单可用的真实name
+ * @param {String|Array} name 表单name
+ * @@return {String} 表单可用的真实name
+ */
+exports.getDataValueType = getDataValueType;
+var realName = function realName(name) {
+  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var base_name = _basePath(name);
+  if ((0, _typeof2.default)(base_name) === 'object' && Array.isArray(base_name) && base_name.length > 1) {
+    var realname = base_name.reduce(function (a, b) {
+      return a += "#".concat(b);
+    }, '_formdata_');
+    return realname;
+  }
+  return base_name[0] || name;
+};
+
+/**
+ * 判断是否表单可用的真实name
+ * @param {String|Array} name 表单name
+ * @@return {String} 表单可用的真实name
+ */
+exports.realName = realName;
+var isRealName = function isRealName(name) {
+  var reg = /^_formdata_#*/;
+  return reg.test(name);
+};
+
+/**
+ * 获取表单数据的原始格式
+ * @@return {Object|Array} object 需要解析的数据
+ */
+exports.isRealName = isRealName;
+var rawData = function rawData() {
+  var object = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var name = arguments.length > 1 ? arguments[1] : undefined;
+  var newData = JSON.parse(JSON.stringify(object));
+  var formData = {};
+  for (var i in newData) {
+    var path = name2arr(i);
+    objSet(formData, path, newData[i]);
+  }
+  return formData;
+};
+
+/**
+ * 真实name还原为 array
+ * @param {*} name 
+ */
+exports.rawData = rawData;
+var name2arr = function name2arr(name) {
+  var field = name.replace('_formdata_#', '');
+  field = field.split('#').map(function (v) {
+    return isNumber(v) ? Number(v) : v;
+  });
+  return field;
+};
+
+/**
+ * 对象中设置值
+ * @param {Object|Array} object 源数据
+ * @param {String| Array} path 'a.b.c' 或 ['a',0,'b','c']
+ * @param {String} value 需要设置的值
+ */
+exports.name2arr = name2arr;
+var objSet = function objSet(object, path, value) {
+  if ((0, _typeof2.default)(object) !== 'object') return object;
+  _basePath(path).reduce(function (o, k, i, _) {
+    if (i === _.length - 1) {
+      // 若遍历结束直接赋值
+      o[k] = value;
+      return null;
+    } else if (k in o) {
+      // 若存在对应路径，则返回找到的对象，进行下一次遍历
+      return o[k];
+    } else {
+      // 若不存在对应路径，则创建对应对象，若下一路径是数字，新对象赋值为空数组，否则赋值为空对象
+      o[k] = /^[0-9]{1,}$/.test(_[i + 1]) ? [] : {};
+      return o[k];
+    }
+  }, object);
+  // 返回object
+  return object;
+};
+
+// 处理 path， path有三种形式：'a[0].b.c'、'a.0.b.c' 和 ['a','0','b','c']，需要统一处理成数组，便于后续使用
+exports.objSet = objSet;
+function _basePath(path) {
+  // 若是数组，则直接返回
+  if (Array.isArray(path)) return path;
+  // 若有 '[',']'，则替换成将 '[' 替换成 '.',去掉 ']'
+  return path.replace(/\[/g, '.').replace(/\]/g, '').split('.');
+}
+
+/**
+ * 从对象中获取值
+ * @param {Object|Array} object 源数据
+ * @param {String| Array} path 'a.b.c' 或 ['a',0,'b','c']
+ * @param {String} defaultVal 如果无法从调用链中获取值的默认值
+ */
+var objGet = function objGet(object, path) {
+  var defaultVal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'undefined';
+  // 先将path处理成统一格式
+  var newPath = _basePath(path);
+  // 递归处理，返回最后结果
+  var val = newPath.reduce(function (o, k) {
+    return (o || {})[k];
+  }, object);
+  return !val || val !== undefined ? val : defaultVal;
+};
+
+/**
+ * 是否为 number 类型 
+ * @param {any} num 需要判断的值
+ * @return {Boolean} 是否为 number
+ */
+exports.objGet = objGet;
+var isNumber = function isNumber(num) {
+  return !isNaN(Number(num));
+};
+
+/**
+ * 是否为 boolean 类型 
+ * @param {any} bool 需要判断的值
+ * @return {Boolean} 是否为 boolean
+ */
+exports.isNumber = isNumber;
+var isBoolean = function isBoolean(bool) {
+  return typeof bool === 'boolean';
+};
+/**
+ * 是否有必填字段
+ * @param {Object} rules 规则
+ * @return {Boolean} 是否有必填字段
+ */
+exports.isBoolean = isBoolean;
+var isRequiredField = function isRequiredField(rules) {
+  var isNoField = false;
+  for (var i = 0; i < rules.length; i++) {
+    var ruleData = rules[i];
+    if (ruleData.required) {
+      isNoField = true;
+      break;
+    }
+  }
+  return isNoField;
+};
+
+/**
+ * 获取数据类型
+ * @param {Any} obj 需要获取数据类型的值
+ */
+exports.isRequiredField = isRequiredField;
+var type = function type(obj) {
+  var class2type = {};
+
+  // 生成class2type映射
+  "Boolean Number String Function Array Date RegExp Object Error".split(" ").map(function (item, index) {
+    class2type["[object " + item + "]"] = item.toLowerCase();
+  });
+  if (obj == null) {
+    return obj + "";
+  }
+  return (0, _typeof2.default)(obj) === "object" || typeof obj === "function" ? class2type[Object.prototype.toString.call(obj)] || "object" : (0, _typeof2.default)(obj);
+};
+
+/**
+ * 判断两个值是否相等
+ * @param {any} a 值  
+ * @param {any} b 值  
+ * @return {Boolean} 是否相等
+ */
+exports.type = type;
+var isEqual = function isEqual(a, b) {
+  //如果a和b本来就全等
+  if (a === b) {
+    //判断是否为0和-0
+    return a !== 0 || 1 / a === 1 / b;
+  }
+  //判断是否为null和undefined
+  if (a == null || b == null) {
+    return a === b;
+  }
+  //接下来判断a和b的数据类型
+  var classNameA = toString.call(a),
+    classNameB = toString.call(b);
+  //如果数据类型不相等，则返回false
+  if (classNameA !== classNameB) {
+    return false;
+  }
+  //如果数据类型相等，再根据不同数据类型分别判断
+  switch (classNameA) {
+    case '[object RegExp]':
+    case '[object String]':
+      //进行字符串转换比较
+      return '' + a === '' + b;
+    case '[object Number]':
+      //进行数字转换比较,判断是否为NaN
+      if (+a !== +a) {
+        return +b !== +b;
+      }
+      //判断是否为0或-0
+      return +a === 0 ? 1 / +a === 1 / b : +a === +b;
+    case '[object Date]':
+    case '[object Boolean]':
+      return +a === +b;
+  }
+  //如果是对象类型
+  if (classNameA == '[object Object]') {
+    //获取a和b的属性长度
+    var propsA = Object.getOwnPropertyNames(a),
+      propsB = Object.getOwnPropertyNames(b);
+    if (propsA.length != propsB.length) {
+      return false;
+    }
+    for (var i = 0; i < propsA.length; i++) {
+      var propName = propsA[i];
+      //如果对应属性对应值不相等，则返回false
+      if (a[propName] !== b[propName]) {
+        return false;
+      }
+    }
+    return true;
+  }
+  //如果是数组类型
+  if (classNameA == '[object Array]') {
+    if (a.toString() == b.toString()) {
+      return true;
+    }
+    return false;
+  }
+};
+exports.isEqual = isEqual;
+
+/***/ }),
+/* 471 */,
+/* 472 */,
+/* 473 */,
+/* 474 */,
+/* 475 */,
+/* 476 */,
+/* 477 */,
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */,
+/* 484 */,
+/* 485 */,
+/* 486 */,
+/* 487 */,
+/* 488 */,
+/* 489 */,
+/* 490 */,
+/* 491 */,
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */,
+/* 497 */,
+/* 498 */,
+/* 499 */
+/*!********************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-parse/props.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    content: String,
+    copyLink: {
+      type: Boolean,
+      default: uni.$u.props.parse.copyLink
+    },
+    domain: String,
+    errorImg: {
+      type: String,
+      default: uni.$u.props.parse.errorImg
+    },
+    lazyLoad: {
+      type: Boolean,
+      default: uni.$u.props.parse.lazyLoad
+    },
+    loadingImg: {
+      type: String,
+      default: uni.$u.props.parse.loadingImg
+    },
+    pauseVideo: {
+      type: Boolean,
+      default: uni.$u.props.parse.pauseVideo
+    },
+    previewImg: {
+      type: Boolean,
+      default: uni.$u.props.parse.previewImg
+    },
+    scrollTable: Boolean,
+    selectable: Boolean,
+    setTitle: {
+      type: Boolean,
+      default: uni.$u.props.parse.setTitle
+    },
+    showImgMenu: {
+      type: Boolean,
+      default: uni.$u.props.parse.showImgMenu
+    },
+    tagStyle: Object,
+    useAnchor: null
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 500 */
+/*!*********************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-parse/parser.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni, wx) {
+
+/**
+ * @fileoverview html 解析器
+ */
+// 配置
+var _defineProperty = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var config = {
+  // 信任的标签（保持标签名不变）
+  trustTags: makeMap('a,abbr,ad,audio,b,blockquote,br,code,col,colgroup,dd,del,dl,dt,div,em,fieldset,h1,h2,h3,h4,h5,h6,hr,i,img,ins,label,legend,li,ol,p,q,ruby,rt,source,span,strong,sub,sup,table,tbody,td,tfoot,th,thead,tr,title,ul,video'),
+  // 块级标签（转为 div，其他的非信任标签转为 span）
+  blockTags: makeMap('address,article,aside,body,caption,center,cite,footer,header,html,nav,pre,section'),
+  // 要移除的标签
+  ignoreTags: makeMap('area,base,canvas,embed,frame,head,iframe,input,link,map,meta,param,rp,script,source,style,textarea,title,track,wbr'),
+  // 自闭合的标签
+  voidTags: makeMap('area,base,br,col,circle,ellipse,embed,frame,hr,img,input,line,link,meta,param,path,polygon,rect,source,track,use,wbr'),
+  // html 实体
+  entities: {
+    lt: '<',
+    gt: '>',
+    quot: '"',
+    apos: "'",
+    ensp: "\u2002",
+    emsp: "\u2003",
+    nbsp: '\xA0',
+    semi: ';',
+    ndash: '–',
+    mdash: '—',
+    middot: '·',
+    lsquo: '‘',
+    rsquo: '’',
+    ldquo: '“',
+    rdquo: '”',
+    bull: '•',
+    hellip: '…'
+  },
+  // 默认的标签样式
+  tagStyle: {
+    address: 'font-style:italic',
+    big: 'display:inline;font-size:1.2em',
+    caption: 'display:table-caption;text-align:center',
+    center: 'text-align:center',
+    cite: 'font-style:italic',
+    dd: 'margin-left:40px',
+    mark: 'background-color:yellow',
+    pre: 'font-family:monospace;white-space:pre',
+    s: 'text-decoration:line-through',
+    small: 'display:inline;font-size:0.8em',
+    u: 'text-decoration:underline'
+  }
+};
+var _uni$getSystemInfoSyn = uni.getSystemInfoSync(),
+  windowWidth = _uni$getSystemInfoSyn.windowWidth;
+var blankChar = makeMap(' ,\r,\n,\t,\f');
+var idIndex = 0;
+
+/**
+ * @description 创建 map
+ * @param {String} str 逗号分隔
+ */
+
+function makeMap(str) {
+  var map = Object.create(null);
+  var list = str.split(',');
+  for (var i = list.length; i--;) {
+    map[list[i]] = true;
+  }
+  return map;
+}
+/**
+ * @description 解码 html 实体
+ * @param {String} str 要解码的字符串
+ * @param {Boolean} amp 要不要解码 &amp;
+ * @returns {String} 解码后的字符串
+ */
+
+function decodeEntity(str, amp) {
+  var i = str.indexOf('&');
+  while (i != -1) {
+    var j = str.indexOf(';', i + 3);
+    var code = void 0;
+    if (j == -1) break;
+    if (str[i + 1] == '#') {
+      // &#123; 形式的实体
+      code = parseInt((str[i + 2] == 'x' ? '0' : '') + str.substring(i + 2, j));
+      if (!isNaN(code)) str = str.substr(0, i) + String.fromCharCode(code) + str.substr(j + 1);
+    } else {
+      // &nbsp; 形式的实体
+      code = str.substring(i + 1, j);
+      if (config.entities[code] || code == 'amp' && amp) str = str.substr(0, i) + (config.entities[code] || '&') + str.substr(j + 1);
+    }
+    i = str.indexOf('&', i + 1);
+  }
+  return str;
+}
+/**
+ * @description html 解析器
+ * @param {Object} vm 组件实例
+ */
+
+function parser(vm) {
+  this.options = vm || {};
+  this.tagStyle = Object.assign(config.tagStyle, this.options.tagStyle);
+  this.imgList = vm.imgList || [];
+  this.plugins = vm.plugins || [];
+  this.attrs = Object.create(null);
+  this.stack = [];
+  this.nodes = [];
+}
+/**
+ * @description 执行解析
+ * @param {String} content 要解析的文本
+ */
+
+parser.prototype.parse = function (content) {
+  // 插件处理
+  for (var i = this.plugins.length; i--;) {
+    if (this.plugins[i].onUpdate) content = this.plugins[i].onUpdate(content, config) || content;
+  }
+  new lexer(this).parse(content); // 出栈未闭合的标签
+
+  while (this.stack.length) {
+    this.popNode();
+  }
+  return this.nodes;
+};
+/**
+ * @description 将标签暴露出来（不被 rich-text 包含）
+ */
+
+parser.prototype.expose = function () {
+  for (var i = this.stack.length; i--;) {
+    var item = this.stack[i];
+    if (item.name == 'a' || item.c) return;
+    item.c = 1;
+  }
+};
+/**
+ * @description 处理插件
+ * @param {Object} node 要处理的标签
+ * @returns {Boolean} 是否要移除此标签
+ */
+
+parser.prototype.hook = function (node) {
+  for (var i = this.plugins.length; i--;) {
+    if (this.plugins[i].onParse && this.plugins[i].onParse(node, this) == false) return false;
+  }
+  return true;
+};
+/**
+ * @description 将链接拼接上主域名
+ * @param {String} url 需要拼接的链接
+ * @returns {String} 拼接后的链接
+ */
+
+parser.prototype.getUrl = function (url) {
+  var domain = this.options.domain;
+  if (url[0] == '/') {
+    // // 开头的补充协议名
+    if (url[1] == '/') url = "".concat(domain ? domain.split('://')[0] : 'http', ":").concat(url); // 否则补充整个域名
+    else if (domain) url = domain + url;
+  } else if (domain && !url.includes('data:') && !url.includes('://')) url = "".concat(domain, "/").concat(url);
+  return url;
+};
+/**
+ * @description 解析样式表
+ * @param {Object} node 标签
+ * @returns {Object}
+ */
+
+parser.prototype.parseStyle = function (node) {
+  var attrs = node.attrs;
+  var list = (this.tagStyle[node.name] || '').split(';').concat((attrs.style || '').split(';'));
+  var styleObj = {};
+  var tmp = '';
+  if (attrs.id) {
+    // 暴露锚点
+    if (this.options.useAnchor) this.expose();else if (node.name != 'img' && node.name != 'a' && node.name != 'video' && node.name != 'audio') attrs.id = void 0;
+  } // 转换 width 和 height 属性
+
+  if (attrs.width) {
+    styleObj.width = parseFloat(attrs.width) + (attrs.width.includes('%') ? '%' : 'px');
+    attrs.width = void 0;
+  }
+  if (attrs.height) {
+    styleObj.height = parseFloat(attrs.height) + (attrs.height.includes('%') ? '%' : 'px');
+    attrs.height = void 0;
+  }
+  for (var i = 0, len = list.length; i < len; i++) {
+    var info = list[i].split(':');
+    if (info.length < 2) continue;
+    var key = info.shift().trim().toLowerCase();
+    var value = info.join(':').trim(); // 兼容性的 css 不压缩
+
+    if (value[0] == '-' && value.lastIndexOf('-') > 0 || value.includes('safe')) tmp += ';'.concat(key, ':').concat(value); // 重复的样式进行覆盖
+    else if (!styleObj[key] || value.includes('import') || !styleObj[key].includes('import')) {
+      // 填充链接
+      if (value.includes('url')) {
+        var j = value.indexOf('(') + 1;
+        if (j) {
+          while (value[j] == '"' || value[j] == "'" || blankChar[value[j]]) {
+            j++;
+          }
+          value = value.substr(0, j) + this.getUrl(value.substr(j));
+        }
+      } // 转换 rpx（rich-text 内部不支持 rpx）
+      else if (value.includes('rpx')) {
+        value = value.replace(/[0-9.]+\s*rpx/g, function ($) {
+          return "".concat(parseFloat($) * windowWidth / 750, "px");
+        });
+      }
+      styleObj[key] = value;
+    }
+  }
+  node.attrs.style = tmp;
+  return styleObj;
+};
+/**
+ * @description 解析到标签名
+ * @param {String} name 标签名
+ * @private
+ */
+
+parser.prototype.onTagName = function (name) {
+  this.tagName = this.xml ? name : name.toLowerCase();
+  if (this.tagName == 'svg') this.xml = true; // svg 标签内大小写敏感
+};
+/**
+ * @description 解析到属性名
+ * @param {String} name 属性名
+ * @private
+ */
+
+parser.prototype.onAttrName = function (name) {
+  name = this.xml ? name : name.toLowerCase();
+  if (name.substr(0, 5) == 'data-') {
+    // data-src 自动转为 src
+    if (name == 'data-src' && !this.attrs.src) this.attrName = 'src'; // a 和 img 标签保留 data- 的属性，可以在 imgtap 和 linktap 事件中使用
+    else if (this.tagName == 'img' || this.tagName == 'a') this.attrName = name; // 剩余的移除以减小大小
+    else this.attrName = void 0;
+  } else {
+    this.attrName = name;
+    this.attrs[name] = 'T'; // boolean 型属性缺省设置
+  }
+};
+/**
+ * @description 解析到属性值
+ * @param {String} val 属性值
+ * @private
+ */
+
+parser.prototype.onAttrVal = function (val) {
+  var name = this.attrName || ''; // 部分属性进行实体解码
+
+  if (name == 'style' || name == 'href') this.attrs[name] = decodeEntity(val, true); // 拼接主域名
+  else if (name.includes('src')) this.attrs[name] = this.getUrl(decodeEntity(val, true));else if (name) this.attrs[name] = val;
+};
+/**
+ * @description 解析到标签开始
+ * @param {Boolean} selfClose 是否有自闭合标识 />
+ * @private
+ */
+
+parser.prototype.onOpenTag = function (selfClose) {
+  // 拼装 node
+  var node = Object.create(null);
+  node.name = this.tagName;
+  node.attrs = this.attrs;
+  this.attrs = Object.create(null);
+  var attrs = node.attrs;
+  var parent = this.stack[this.stack.length - 1];
+  var siblings = parent ? parent.children : this.nodes;
+  var close = this.xml ? selfClose : config.voidTags[node.name]; // 转换 embed 标签
+
+  if (node.name == 'embed') {
+    var src = attrs.src || ''; // 按照后缀名和 type 将 embed 转为 video 或 audio
+
+    if (src.includes('.mp4') || src.includes('.3gp') || src.includes('.m3u8') || (attrs.type || '').includes('video')) node.name = 'video';else if (src.includes('.mp3') || src.includes('.wav') || src.includes('.aac') || src.includes('.m4a') || (attrs.type || '').includes('audio')) node.name = 'audio';
+    if (attrs.autostart) attrs.autoplay = 'T';
+    attrs.controls = 'T';
+  }
+  // 处理音视频
+
+  if (node.name == 'video' || node.name == 'audio') {
+    // 设置 id 以便获取 context
+    if (node.name == 'video' && !attrs.id) attrs.id = "v".concat(idIndex++); // 没有设置 controls 也没有设置 autoplay 的自动设置 controls
+
+    if (!attrs.controls && !attrs.autoplay) attrs.controls = 'T'; // 用数组存储所有可用的 source
+
+    node.src = [];
+    if (attrs.src) {
+      node.src.push(attrs.src);
+      attrs.src = void 0;
+    }
+    this.expose();
+  }
+  // 处理自闭合标签
+
+  if (close) {
+    if (!this.hook(node) || config.ignoreTags[node.name]) {
+      // 通过 base 标签设置主域名
+      if (node.name == 'base' && !this.options.domain) this.options.domain = attrs.href;
+      // 设置 source 标签（仅父节点为 video 或 audio 时有效）
+      else if (node.name == 'source' && parent && (parent.name == 'video' || parent.name == 'audio') && attrs.src) parent.src.push(attrs.src);
+      return;
+    } // 解析 style
+
+    var styleObj = this.parseStyle(node); // 处理图片
+
+    if (node.name == 'img') {
+      if (attrs.src) {
+        // 标记 webp
+        if (attrs.src.includes('webp')) node.webp = 'T'; // data url 图片如果没有设置 original-src 默认为不可预览的小图片
+
+        if (attrs.src.includes('data:') && !attrs['original-src']) attrs.ignore = 'T';
+        if (!attrs.ignore || node.webp || attrs.src.includes('cloud://')) {
+          for (var i = this.stack.length; i--;) {
+            var item = this.stack[i];
+            if (item.name == 'a') {
+              node.a = item.attrs;
+              break;
+            }
+            var style = item.attrs.style || '';
+            if (style.includes('flex:') && !style.includes('flex:0') && !style.includes('flex: 0') && (!styleObj.width || !styleObj.width.includes('%'))) {
+              styleObj.width = '100% !important';
+              styleObj.height = '';
+              for (var j = i + 1; j < this.stack.length; j++) {
+                this.stack[j].attrs.style = (this.stack[j].attrs.style || '').replace('inline-', '');
+              }
+            } else if (style.includes('flex') && styleObj.width == '100%') {
+              for (var _j = i + 1; _j < this.stack.length; _j++) {
+                var _style = this.stack[_j].attrs.style || '';
+                if (!_style.includes(';width') && !_style.includes(' width') && _style.indexOf('width') != 0) {
+                  styleObj.width = '';
+                  break;
+                }
+              }
+            } else if (style.includes('inline-block')) {
+              if (styleObj.width && styleObj.width[styleObj.width.length - 1] == '%') {
+                item.attrs.style += ";max-width:".concat(styleObj.width);
+                styleObj.width = '';
+              } else item.attrs.style += ';max-width:100%';
+            }
+            item.c = 1;
+          }
+          attrs.i = this.imgList.length.toString();
+          var _src = attrs['original-src'] || attrs.src;
+          if (this.imgList.includes(_src)) {
+            // 如果有重复的链接则对域名进行随机大小写变换避免预览时错位
+            var _i = _src.indexOf('://');
+            if (_i != -1) {
+              _i += 3;
+              var newSrc = _src.substr(0, _i);
+              for (; _i < _src.length; _i++) {
+                if (_src[_i] == '/') break;
+                newSrc += Math.random() > 0.5 ? _src[_i].toUpperCase() : _src[_i];
+              }
+              newSrc += _src.substr(_i);
+              _src = newSrc;
+            }
+          }
+          this.imgList.push(_src);
+        }
+      }
+      if (styleObj.display == 'inline') styleObj.display = '';
+      if (attrs.ignore) {
+        styleObj['max-width'] = styleObj['max-width'] || '100%';
+        attrs.style += ';-webkit-touch-callout:none';
+      }
+      // 设置的宽度超出屏幕，为避免变形，高度转为自动
+
+      if (parseInt(styleObj.width) > windowWidth) styleObj.height = void 0; // 记录是否设置了宽高
+
+      if (styleObj.width) {
+        if (styleObj.width.includes('auto')) styleObj.width = '';else {
+          node.w = 'T';
+          if (styleObj.height && !styleObj.height.includes('auto')) node.h = 'T';
+        }
+      }
+    } else if (node.name == 'svg') {
+      siblings.push(node);
+      this.stack.push(node);
+      this.popNode();
+      return;
+    }
+    for (var key in styleObj) {
+      if (styleObj[key]) attrs.style += ';'.concat(key, ':').concat(styleObj[key].replace(' !important', ''));
+    }
+    attrs.style = attrs.style.substr(1) || void 0;
+  } else {
+    if (node.name == 'pre' || (attrs.style || '').includes('white-space') && attrs.style.includes('pre')) this.pre = node.pre = true;
+    node.children = [];
+    this.stack.push(node);
+  } // 加入节点树
+
+  siblings.push(node);
+};
+/**
+ * @description 解析到标签结束
+ * @param {String} name 标签名
+ * @private
+ */
+
+parser.prototype.onCloseTag = function (name) {
+  // 依次出栈到匹配为止
+  name = this.xml ? name : name.toLowerCase();
+  var i;
+  for (i = this.stack.length; i--;) {
+    if (this.stack[i].name == name) break;
+  }
+  if (i != -1) {
+    while (this.stack.length > i) {
+      this.popNode();
+    }
+  } else if (name == 'p' || name == 'br') {
+    var siblings = this.stack.length ? this.stack[this.stack.length - 1].children : this.nodes;
+    siblings.push({
+      name: name,
+      attrs: {}
+    });
+  }
+};
+/**
+ * @description 处理标签出栈
+ * @private
+ */
+
+parser.prototype.popNode = function () {
+  var node = this.stack.pop();
+  var attrs = node.attrs;
+  var children = node.children;
+  var parent = this.stack[this.stack.length - 1];
+  var siblings = parent ? parent.children : this.nodes;
+  if (!this.hook(node) || config.ignoreTags[node.name]) {
+    // 获取标题
+    if (node.name == 'title' && children.length && children[0].type == 'text' && this.options.setTitle) {
+      uni.setNavigationBarTitle({
+        title: children[0].text
+      });
+    }
+    siblings.pop();
+    return;
+  }
+  if (node.pre) {
+    // 是否合并空白符标识
+    node.pre = this.pre = void 0;
+    for (var i = this.stack.length; i--;) {
+      if (this.stack[i].pre) this.pre = true;
+    }
+  }
+  var styleObj = {}; // 转换 svg
+
+  if (node.name == 'svg') {
+    var src = '';
+    var _attrs = attrs,
+      style = _attrs.style;
+    attrs.style = '';
+    attrs.xmlns = 'http://www.w3.org/2000/svg';
+    (function traversal(node) {
+      src += "<".concat(node.name);
+      for (var item in node.attrs) {
+        var val = node.attrs[item];
+        if (val) {
+          if (item == 'viewbox') item = 'viewBox';
+          src += ' '.concat(item, '="').concat(val, '"');
+        }
+      }
+      if (!node.children) src += '/>';else {
+        src += '>';
+        for (var _i2 = 0; _i2 < node.children.length; _i2++) {
+          traversal(node.children[_i2]);
+        }
+        src += "</".concat(node.name, ">");
+      }
+    })(node);
+    node.name = 'img';
+    node.attrs = {
+      src: "data:image/svg+xml;utf8,".concat(src.replace(/#/g, '%23')),
+      style: style,
+      ignore: 'T'
+    };
+    node.children = void 0;
+    this.xml = false;
+    return;
+  }
+  // 转换 align 属性
+
+  if (attrs.align) {
+    if (node.name == 'table') {
+      if (attrs.align == 'center') styleObj['margin-inline-start'] = styleObj['margin-inline-end'] = 'auto';else styleObj.float = attrs.align;
+    } else styleObj['text-align'] = attrs.align;
+    attrs.align = void 0;
+  } // 转换 font 标签的属性
+
+  if (node.name == 'font') {
+    if (attrs.color) {
+      styleObj.color = attrs.color;
+      attrs.color = void 0;
+    }
+    if (attrs.face) {
+      styleObj['font-family'] = attrs.face;
+      attrs.face = void 0;
+    }
+    if (attrs.size) {
+      var size = parseInt(attrs.size);
+      if (!isNaN(size)) {
+        if (size < 1) size = 1;else if (size > 7) size = 7;
+        styleObj['font-size'] = ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'][size - 1];
+      }
+      attrs.size = void 0;
+    }
+  }
+  // 一些编辑器的自带 class
+
+  if ((attrs.class || '').includes('align-center')) styleObj['text-align'] = 'center';
+  Object.assign(styleObj, this.parseStyle(node));
+  if (parseInt(styleObj.width) > windowWidth) {
+    styleObj['max-width'] = '100%';
+    styleObj['box-sizing'] = 'border-box';
+  }
+  if (config.blockTags[node.name]) node.name = 'div'; // 未知标签转为 span，避免无法显示
+  else if (!config.trustTags[node.name] && !this.xml) node.name = 'span';
+  if (node.name == 'a' || node.name == 'ad') this.expose();
+
+  // 列表处理
+  else if ((node.name == 'ul' || node.name == 'ol') && node.c) {
+    var types = {
+      a: 'lower-alpha',
+      A: 'upper-alpha',
+      i: 'lower-roman',
+      I: 'upper-roman'
+    };
+    if (types[attrs.type]) {
+      attrs.style += ";list-style-type:".concat(types[attrs.type]);
+      attrs.type = void 0;
+    }
+    for (var _i4 = children.length; _i4--;) {
+      if (children[_i4].name == 'li') children[_i4].c = 1;
+    }
+  } // 表格处理
+  else if (node.name == 'table') {
+    // cellpadding、cellspacing、border 这几个常用表格属性需要通过转换实现
+    var padding = parseFloat(attrs.cellpadding);
+    var spacing = parseFloat(attrs.cellspacing);
+    var border = parseFloat(attrs.border);
+    if (node.c) {
+      // padding 和 spacing 默认 2
+      if (isNaN(padding)) padding = 2;
+      if (isNaN(spacing)) spacing = 2;
+    }
+    if (border) attrs.style += ";border:".concat(border, "px solid gray");
+    if (node.flag && node.c) {
+      // 有 colspan 或 rowspan 且含有链接的表格通过 grid 布局实现
+      styleObj.display = 'grid';
+      if (spacing) {
+        styleObj['grid-gap'] = "".concat(spacing, "px");
+        styleObj.padding = "".concat(spacing, "px");
+      } // 无间隔的情况下避免边框重叠
+      else if (border) attrs.style += ';border-left:0;border-top:0';
+      var width = [];
+      // 表格的列宽
+      var trList = [];
+      // tr 列表
+      var cells = [];
+      // 保存新的单元格
+      var map = {}; // 被合并单元格占用的格子
+
+      (function traversal(nodes) {
+        for (var _i5 = 0; _i5 < nodes.length; _i5++) {
+          if (nodes[_i5].name == 'tr') trList.push(nodes[_i5]);else traversal(nodes[_i5].children || []);
+        }
+      })(children);
+      for (var row = 1; row <= trList.length; row++) {
+        var col = 1;
+        for (var j = 0; j < trList[row - 1].children.length; j++, col++) {
+          var td = trList[row - 1].children[j];
+          if (td.name == 'td' || td.name == 'th') {
+            // 这个格子被上面的单元格占用，则列号++
+            while (map["".concat(row, ".").concat(col)]) {
+              col++;
+            }
+            var _style2 = td.attrs.style || '';
+            var start = _style2.indexOf('width') ? _style2.indexOf(';width') : 0; // 提取出 td 的宽度
+
+            if (start != -1) {
+              var end = _style2.indexOf(';', start + 6);
+              if (end == -1) end = _style2.length;
+              if (!td.attrs.colspan) width[col] = _style2.substring(start ? start + 7 : 6, end);
+              _style2 = _style2.substr(0, start) + _style2.substr(end);
+            }
+            _style2 += (border ? ';border:'.concat(border, 'px solid gray') + (spacing ? '' : ';border-right:0;border-bottom:0') : '') + (padding ? ';padding:'.concat(padding, 'px') : ''); // 处理列合并
+
+            if (td.attrs.colspan) {
+              _style2 += ';grid-column-start:'.concat(col, ';grid-column-end:').concat(col + parseInt(td.attrs.colspan));
+              if (!td.attrs.rowspan) _style2 += ';grid-row-start:'.concat(row, ';grid-row-end:').concat(row + 1);
+              col += parseInt(td.attrs.colspan) - 1;
+            } // 处理行合并
+
+            if (td.attrs.rowspan) {
+              _style2 += ';grid-row-start:'.concat(row, ';grid-row-end:').concat(row + parseInt(td.attrs.rowspan));
+              if (!td.attrs.colspan) _style2 += ';grid-column-start:'.concat(col, ';grid-column-end:').concat(col + 1); // 记录下方单元格被占用
+
+              for (var k = 1; k < td.attrs.rowspan; k++) {
+                map["".concat(row + k, ".").concat(col)] = 1;
+              }
+            }
+            if (_style2) td.attrs.style = _style2;
+            cells.push(td);
+          }
+        }
+        if (row == 1) {
+          var temp = '';
+          for (var _i6 = 1; _i6 < col; _i6++) {
+            temp += "".concat(width[_i6] ? width[_i6] : 'auto', " ");
+          }
+          styleObj['grid-template-columns'] = temp;
+        }
+      }
+      node.children = cells;
+    } else {
+      // 没有使用合并单元格的表格通过 table 布局实现
+      if (node.c) styleObj.display = 'table';
+      if (!isNaN(spacing)) styleObj['border-spacing'] = "".concat(spacing, "px");
+      if (border || padding) {
+        // 遍历
+        (function traversal(nodes) {
+          for (var _i7 = 0; _i7 < nodes.length; _i7++) {
+            var _td = nodes[_i7];
+            if (_td.name == 'th' || _td.name == 'td') {
+              if (border) _td.attrs.style = 'border:'.concat(border, 'px solid gray;').concat(_td.attrs.style || '');
+              if (padding) _td.attrs.style = 'padding:'.concat(padding, 'px;').concat(_td.attrs.style || '');
+            } else if (_td.children) traversal(_td.children);
+          }
+        })(children);
+      }
+    } // 给表格添加一个单独的横向滚动层
+
+    if (this.options.scrollTable && !(attrs.style || '').includes('inline')) {
+      var table = _objectSpread({}, node);
+      node.name = 'div';
+      node.attrs = {
+        style: 'overflow:auto'
+      };
+      node.children = [table];
+      attrs = table.attrs;
+    }
+  } else if ((node.name == 'td' || node.name == 'th') && (attrs.colspan || attrs.rowspan)) {
+    for (var _i8 = this.stack.length; _i8--;) {
+      if (this.stack[_i8].name == 'table') {
+        this.stack[_i8].flag = 1; // 指示含有合并单元格
+
+        break;
+      }
+    }
+  } // 转换 ruby
+  else if (node.name == 'ruby') {
+    node.name = 'span';
+    for (var _i9 = 0; _i9 < children.length - 1; _i9++) {
+      if (children[_i9].type == 'text' && children[_i9 + 1].name == 'rt') {
+        children[_i9] = {
+          name: 'div',
+          attrs: {
+            style: 'display:inline-block'
+          },
+          children: [{
+            name: 'div',
+            attrs: {
+              style: 'font-size:50%;text-align:start'
+            },
+            children: children[_i9 + 1].children
+          }, children[_i9]]
+        };
+        children.splice(_i9 + 1, 1);
+      }
+    }
+  } else if (node.c) {
+    node.c = 2;
+    for (var _i10 = node.children.length; _i10--;) {
+      if (!node.children[_i10].c || node.children[_i10].name == 'table') node.c = 1;
+    }
+  }
+  if ((styleObj.display || '').includes('flex') && !node.c) {
+    for (var _i11 = children.length; _i11--;) {
+      var _item = children[_i11];
+      if (_item.f) {
+        _item.attrs.style = (_item.attrs.style || '') + _item.f;
+        _item.f = void 0;
+      }
+    }
+  } // flex 布局时部分样式需要提取到 rich-text 外层
+
+  var flex = parent && (parent.attrs.style || '').includes('flex')
+  // 检查基础库版本 virtualHost 是否可用
+  && !(node.c && wx.getNFCAdapter);
+  if (flex) node.f = ';max-width:100%';
+  for (var key in styleObj) {
+    if (styleObj[key]) {
+      var val = ';'.concat(key, ':').concat(styleObj[key].replace(' !important', ''));
+      if (flex && (key.includes('flex') && key != 'flex-direction' || key == 'align-self' || styleObj[key][0] == '-' || key == 'width' && val.includes('%'))) {
+        node.f += val;
+        if (key == 'width') attrs.style += ';width:100%';
+      } else {
+        attrs.style += val;
+      }
+    }
+  }
+  attrs.style = attrs.style.substr(1) || void 0;
+};
+/**
+ * @description 解析到文本
+ * @param {String} text 文本内容
+ */
+
+parser.prototype.onText = function (text) {
+  if (!this.pre) {
+    // 合并空白符
+    var trim = '';
+    var flag;
+    for (var i = 0, len = text.length; i < len; i++) {
+      if (!blankChar[text[i]]) trim += text[i];else {
+        if (trim[trim.length - 1] != ' ') trim += ' ';
+        if (text[i] == '\n' && !flag) flag = true;
+      }
+    } // 去除含有换行符的空串
+
+    if (trim == ' ' && flag) return;
+    text = trim;
+  }
+  var node = Object.create(null);
+  node.type = 'text';
+  node.text = decodeEntity(text);
+  if (this.hook(node)) {
+    var siblings = this.stack.length ? this.stack[this.stack.length - 1].children : this.nodes;
+    siblings.push(node);
+  }
+};
+/**
+ * @description html 词法分析器
+ * @param {Object} handler 高层处理器
+ */
+
+function lexer(handler) {
+  this.handler = handler;
+}
+/**
+ * @description 执行解析
+ * @param {String} content 要解析的文本
+ */
+
+lexer.prototype.parse = function (content) {
+  this.content = content || '';
+  this.i = 0; // 标记解析位置
+
+  this.start = 0; // 标记一个单词的开始位置
+
+  this.state = this.text; // 当前状态
+
+  for (var len = this.content.length; this.i != -1 && this.i < len;) {
+    this.state();
+  }
+};
+/**
+ * @description 检查标签是否闭合
+ * @param {String} method 如果闭合要进行的操作
+ * @returns {Boolean} 是否闭合
+ * @private
+ */
+
+lexer.prototype.checkClose = function (method) {
+  var selfClose = this.content[this.i] == '/';
+  if (this.content[this.i] == '>' || selfClose && this.content[this.i + 1] == '>') {
+    if (method) this.handler[method](this.content.substring(this.start, this.i));
+    this.i += selfClose ? 2 : 1;
+    this.start = this.i;
+    this.handler.onOpenTag(selfClose);
+    if (this.handler.tagName == 'script') {
+      this.i = this.content.indexOf('</', this.i);
+      if (this.i != -1) {
+        this.i += 2;
+        this.start = this.i;
+      }
+      this.state = this.endTag;
+    } else this.state = this.text;
+    return true;
+  }
+  return false;
+};
+/**
+ * @description 文本状态
+ * @private
+ */
+
+lexer.prototype.text = function () {
+  this.i = this.content.indexOf('<', this.i); // 查找最近的标签
+
+  if (this.i == -1) {
+    // 没有标签了
+    if (this.start < this.content.length) this.handler.onText(this.content.substring(this.start, this.content.length));
+    return;
+  }
+  var c = this.content[this.i + 1];
+  if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z') {
+    // 标签开头
+    if (this.start != this.i) this.handler.onText(this.content.substring(this.start, this.i));
+    this.start = ++this.i;
+    this.state = this.tagName;
+  } else if (c == '/' || c == '!' || c == '?') {
+    if (this.start != this.i) this.handler.onText(this.content.substring(this.start, this.i));
+    var next = this.content[this.i + 2];
+    if (c == '/' && (next >= 'a' && next <= 'z' || next >= 'A' && next <= 'Z')) {
+      // 标签结尾
+      this.i += 2;
+      this.start = this.i;
+      return this.state = this.endTag;
+    } // 处理注释
+
+    var end = '-->';
+    if (c != '!' || this.content[this.i + 2] != '-' || this.content[this.i + 3] != '-') end = '>';
+    this.i = this.content.indexOf(end, this.i);
+    if (this.i != -1) {
+      this.i += end.length;
+      this.start = this.i;
+    }
+  } else this.i++;
+};
+/**
+ * @description 标签名状态
+ * @private
+ */
+
+lexer.prototype.tagName = function () {
+  if (blankChar[this.content[this.i]]) {
+    // 解析到标签名
+    this.handler.onTagName(this.content.substring(this.start, this.i));
+    while (blankChar[this.content[++this.i]]) {}
+    if (this.i < this.content.length && !this.checkClose()) {
+      this.start = this.i;
+      this.state = this.attrName;
+    }
+  } else if (!this.checkClose('onTagName')) this.i++;
+};
+/**
+ * @description 属性名状态
+ * @private
+ */
+
+lexer.prototype.attrName = function () {
+  var c = this.content[this.i];
+  if (blankChar[c] || c == '=') {
+    // 解析到属性名
+    this.handler.onAttrName(this.content.substring(this.start, this.i));
+    var needVal = c == '=';
+    var len = this.content.length;
+    while (++this.i < len) {
+      c = this.content[this.i];
+      if (!blankChar[c]) {
+        if (this.checkClose()) return;
+        if (needVal) {
+          // 等号后遇到第一个非空字符
+          this.start = this.i;
+          return this.state = this.attrVal;
+        }
+        if (this.content[this.i] == '=') needVal = true;else {
+          this.start = this.i;
+          return this.state = this.attrName;
+        }
+      }
+    }
+  } else if (!this.checkClose('onAttrName')) this.i++;
+};
+/**
+ * @description 属性值状态
+ * @private
+ */
+
+lexer.prototype.attrVal = function () {
+  var c = this.content[this.i];
+  var len = this.content.length; // 有冒号的属性
+
+  if (c == '"' || c == "'") {
+    this.start = ++this.i;
+    this.i = this.content.indexOf(c, this.i);
+    if (this.i == -1) return;
+    this.handler.onAttrVal(this.content.substring(this.start, this.i));
+  } // 没有冒号的属性
+  else {
+    for (; this.i < len; this.i++) {
+      if (blankChar[this.content[this.i]]) {
+        this.handler.onAttrVal(this.content.substring(this.start, this.i));
+        break;
+      } else if (this.checkClose('onAttrVal')) return;
+    }
+  }
+  while (blankChar[this.content[++this.i]]) {}
+  if (this.i < len && !this.checkClose()) {
+    this.start = this.i;
+    this.state = this.attrName;
+  }
+};
+/**
+ * @description 结束标签状态
+ * @returns {String} 结束的标签名
+ * @private
+ */
+
+lexer.prototype.endTag = function () {
+  var c = this.content[this.i];
+  if (blankChar[c] || c == '>' || c == '/') {
+    this.handler.onCloseTag(this.content.substring(this.start, this.i));
+    if (c != '>') {
+      this.i = this.content.indexOf('>', this.i);
+      if (this.i == -1) return;
+    }
+    this.start = ++this.i;
+    this.state = this.text;
+  } else this.i++;
+};
+module.exports = parser;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/wx.js */ 1)["default"]))
+
+/***/ }),
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */
+/*!********************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-badge/props.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    // 是否显示圆点
+    isDot: {
+      type: Boolean,
+      default: uni.$u.props.badge.isDot
+    },
+    // 显示的内容
+    value: {
+      type: [Number, String],
+      default: uni.$u.props.badge.value
+    },
+    // 是否显示
+    show: {
+      type: Boolean,
+      default: uni.$u.props.badge.show
+    },
+    // 最大值，超过最大值会显示 '{max}+'
+    max: {
+      type: [Number, String],
+      default: uni.$u.props.badge.max
+    },
+    // 主题类型，error|warning|success|primary
+    type: {
+      type: String,
+      default: uni.$u.props.badge.type
+    },
+    // 当数值为 0 时，是否展示 Badge
+    showZero: {
+      type: Boolean,
+      default: uni.$u.props.badge.showZero
+    },
+    // 背景颜色，优先级比type高，如设置，type参数会失效
+    bgColor: {
+      type: [String, null],
+      default: uni.$u.props.badge.bgColor
+    },
+    // 字体颜色
+    color: {
+      type: [String, null],
+      default: uni.$u.props.badge.color
+    },
+    // 徽标形状，circle-四角均为圆角，horn-左下角为直角
+    shape: {
+      type: String,
+      default: uni.$u.props.badge.shape
+    },
+    // 设置数字的显示方式，overflow|ellipsis|limit
+    // overflow会根据max字段判断，超出显示`${max}+`
+    // ellipsis会根据max判断，超出显示`${max}...`
+    // limit会依据1000作为判断条件，超出1000，显示`${value/1000}K`，比如2.2k、3.34w，最多保留2位小数
+    numberType: {
+      type: String,
+      default: uni.$u.props.badge.numberType
+    },
+    // 设置badge的位置偏移，格式为 [x, y]，也即设置的为top和right的值，absolute为true时有效
+    offset: {
+      type: Array,
+      default: uni.$u.props.badge.offset
+    },
+    // 是否反转背景和字体颜色
+    inverted: {
+      type: Boolean,
+      default: uni.$u.props.badge.inverted
+    },
+    // 是否绝对定位
+    absolute: {
+      type: Boolean,
+      default: uni.$u.props.badge.absolute
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */,
+/* 515 */,
+/* 516 */
 /*!***************************************************************************************!*\
   !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-loading-icon/props.js ***!
   \***************************************************************************************/
@@ -27675,14 +31150,14 @@ exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */,
+/* 522 */,
+/* 523 */,
+/* 524 */
 /*!*******************************************************************************!*\
   !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-icon/icons.js ***!
   \*******************************************************************************/
@@ -27913,7 +31388,7 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 251 */
+/* 525 */
 /*!*******************************************************************************!*\
   !*** F:/wxProgram/cloudForum/uni_modules/uview-ui/components/u-icon/props.js ***!
   \*******************************************************************************/
@@ -28017,6 +31492,1187 @@ var _default = {
   }
 };
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */,
+/* 537 */,
+/* 538 */
+/*!***********************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-icons/components/uni-icons/icons.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  "id": "2852637",
+  "name": "uniui图标库",
+  "font_family": "uniicons",
+  "css_prefix_text": "uniui-",
+  "description": "",
+  "glyphs": [{
+    "icon_id": "25027049",
+    "name": "yanse",
+    "font_class": "color",
+    "unicode": "e6cf",
+    "unicode_decimal": 59087
+  }, {
+    "icon_id": "25027048",
+    "name": "wallet",
+    "font_class": "wallet",
+    "unicode": "e6b1",
+    "unicode_decimal": 59057
+  }, {
+    "icon_id": "25015720",
+    "name": "settings-filled",
+    "font_class": "settings-filled",
+    "unicode": "e6ce",
+    "unicode_decimal": 59086
+  }, {
+    "icon_id": "25015434",
+    "name": "shimingrenzheng-filled",
+    "font_class": "auth-filled",
+    "unicode": "e6cc",
+    "unicode_decimal": 59084
+  }, {
+    "icon_id": "24934246",
+    "name": "shop-filled",
+    "font_class": "shop-filled",
+    "unicode": "e6cd",
+    "unicode_decimal": 59085
+  }, {
+    "icon_id": "24934159",
+    "name": "staff-filled-01",
+    "font_class": "staff-filled",
+    "unicode": "e6cb",
+    "unicode_decimal": 59083
+  }, {
+    "icon_id": "24932461",
+    "name": "VIP-filled",
+    "font_class": "vip-filled",
+    "unicode": "e6c6",
+    "unicode_decimal": 59078
+  }, {
+    "icon_id": "24932462",
+    "name": "plus_circle_fill",
+    "font_class": "plus-filled",
+    "unicode": "e6c7",
+    "unicode_decimal": 59079
+  }, {
+    "icon_id": "24932463",
+    "name": "folder_add-filled",
+    "font_class": "folder-add-filled",
+    "unicode": "e6c8",
+    "unicode_decimal": 59080
+  }, {
+    "icon_id": "24932464",
+    "name": "yanse-filled",
+    "font_class": "color-filled",
+    "unicode": "e6c9",
+    "unicode_decimal": 59081
+  }, {
+    "icon_id": "24932465",
+    "name": "tune-filled",
+    "font_class": "tune-filled",
+    "unicode": "e6ca",
+    "unicode_decimal": 59082
+  }, {
+    "icon_id": "24932455",
+    "name": "a-rilidaka-filled",
+    "font_class": "calendar-filled",
+    "unicode": "e6c0",
+    "unicode_decimal": 59072
+  }, {
+    "icon_id": "24932456",
+    "name": "notification-filled",
+    "font_class": "notification-filled",
+    "unicode": "e6c1",
+    "unicode_decimal": 59073
+  }, {
+    "icon_id": "24932457",
+    "name": "wallet-filled",
+    "font_class": "wallet-filled",
+    "unicode": "e6c2",
+    "unicode_decimal": 59074
+  }, {
+    "icon_id": "24932458",
+    "name": "paihangbang-filled",
+    "font_class": "medal-filled",
+    "unicode": "e6c3",
+    "unicode_decimal": 59075
+  }, {
+    "icon_id": "24932459",
+    "name": "gift-filled",
+    "font_class": "gift-filled",
+    "unicode": "e6c4",
+    "unicode_decimal": 59076
+  }, {
+    "icon_id": "24932460",
+    "name": "fire-filled",
+    "font_class": "fire-filled",
+    "unicode": "e6c5",
+    "unicode_decimal": 59077
+  }, {
+    "icon_id": "24928001",
+    "name": "refreshempty",
+    "font_class": "refreshempty",
+    "unicode": "e6bf",
+    "unicode_decimal": 59071
+  }, {
+    "icon_id": "24926853",
+    "name": "location-ellipse",
+    "font_class": "location-filled",
+    "unicode": "e6af",
+    "unicode_decimal": 59055
+  }, {
+    "icon_id": "24926735",
+    "name": "person-filled",
+    "font_class": "person-filled",
+    "unicode": "e69d",
+    "unicode_decimal": 59037
+  }, {
+    "icon_id": "24926703",
+    "name": "personadd-filled",
+    "font_class": "personadd-filled",
+    "unicode": "e698",
+    "unicode_decimal": 59032
+  }, {
+    "icon_id": "24923351",
+    "name": "back",
+    "font_class": "back",
+    "unicode": "e6b9",
+    "unicode_decimal": 59065
+  }, {
+    "icon_id": "24923352",
+    "name": "forward",
+    "font_class": "forward",
+    "unicode": "e6ba",
+    "unicode_decimal": 59066
+  }, {
+    "icon_id": "24923353",
+    "name": "arrowthinright",
+    "font_class": "arrow-right",
+    "unicode": "e6bb",
+    "unicode_decimal": 59067
+  }, {
+    "icon_id": "24923353",
+    "name": "arrowthinright",
+    "font_class": "arrowthinright",
+    "unicode": "e6bb",
+    "unicode_decimal": 59067
+  }, {
+    "icon_id": "24923354",
+    "name": "arrowthinleft",
+    "font_class": "arrow-left",
+    "unicode": "e6bc",
+    "unicode_decimal": 59068
+  }, {
+    "icon_id": "24923354",
+    "name": "arrowthinleft",
+    "font_class": "arrowthinleft",
+    "unicode": "e6bc",
+    "unicode_decimal": 59068
+  }, {
+    "icon_id": "24923355",
+    "name": "arrowthinup",
+    "font_class": "arrow-up",
+    "unicode": "e6bd",
+    "unicode_decimal": 59069
+  }, {
+    "icon_id": "24923355",
+    "name": "arrowthinup",
+    "font_class": "arrowthinup",
+    "unicode": "e6bd",
+    "unicode_decimal": 59069
+  }, {
+    "icon_id": "24923356",
+    "name": "arrowthindown",
+    "font_class": "arrow-down",
+    "unicode": "e6be",
+    "unicode_decimal": 59070
+  }, {
+    "icon_id": "24923356",
+    "name": "arrowthindown",
+    "font_class": "arrowthindown",
+    "unicode": "e6be",
+    "unicode_decimal": 59070
+  }, {
+    "icon_id": "24923349",
+    "name": "arrowdown",
+    "font_class": "bottom",
+    "unicode": "e6b8",
+    "unicode_decimal": 59064
+  }, {
+    "icon_id": "24923349",
+    "name": "arrowdown",
+    "font_class": "arrowdown",
+    "unicode": "e6b8",
+    "unicode_decimal": 59064
+  }, {
+    "icon_id": "24923346",
+    "name": "arrowright",
+    "font_class": "right",
+    "unicode": "e6b5",
+    "unicode_decimal": 59061
+  }, {
+    "icon_id": "24923346",
+    "name": "arrowright",
+    "font_class": "arrowright",
+    "unicode": "e6b5",
+    "unicode_decimal": 59061
+  }, {
+    "icon_id": "24923347",
+    "name": "arrowup",
+    "font_class": "top",
+    "unicode": "e6b6",
+    "unicode_decimal": 59062
+  }, {
+    "icon_id": "24923347",
+    "name": "arrowup",
+    "font_class": "arrowup",
+    "unicode": "e6b6",
+    "unicode_decimal": 59062
+  }, {
+    "icon_id": "24923348",
+    "name": "arrowleft",
+    "font_class": "left",
+    "unicode": "e6b7",
+    "unicode_decimal": 59063
+  }, {
+    "icon_id": "24923348",
+    "name": "arrowleft",
+    "font_class": "arrowleft",
+    "unicode": "e6b7",
+    "unicode_decimal": 59063
+  }, {
+    "icon_id": "24923334",
+    "name": "eye",
+    "font_class": "eye",
+    "unicode": "e651",
+    "unicode_decimal": 58961
+  }, {
+    "icon_id": "24923335",
+    "name": "eye-filled",
+    "font_class": "eye-filled",
+    "unicode": "e66a",
+    "unicode_decimal": 58986
+  }, {
+    "icon_id": "24923336",
+    "name": "eye-slash",
+    "font_class": "eye-slash",
+    "unicode": "e6b3",
+    "unicode_decimal": 59059
+  }, {
+    "icon_id": "24923337",
+    "name": "eye-slash-filled",
+    "font_class": "eye-slash-filled",
+    "unicode": "e6b4",
+    "unicode_decimal": 59060
+  }, {
+    "icon_id": "24923305",
+    "name": "info-filled",
+    "font_class": "info-filled",
+    "unicode": "e649",
+    "unicode_decimal": 58953
+  }, {
+    "icon_id": "24923299",
+    "name": "reload-01",
+    "font_class": "reload",
+    "unicode": "e6b2",
+    "unicode_decimal": 59058
+  }, {
+    "icon_id": "24923195",
+    "name": "mic_slash_fill",
+    "font_class": "micoff-filled",
+    "unicode": "e6b0",
+    "unicode_decimal": 59056
+  }, {
+    "icon_id": "24923165",
+    "name": "map-pin-ellipse",
+    "font_class": "map-pin-ellipse",
+    "unicode": "e6ac",
+    "unicode_decimal": 59052
+  }, {
+    "icon_id": "24923166",
+    "name": "map-pin",
+    "font_class": "map-pin",
+    "unicode": "e6ad",
+    "unicode_decimal": 59053
+  }, {
+    "icon_id": "24923167",
+    "name": "location",
+    "font_class": "location",
+    "unicode": "e6ae",
+    "unicode_decimal": 59054
+  }, {
+    "icon_id": "24923064",
+    "name": "starhalf",
+    "font_class": "starhalf",
+    "unicode": "e683",
+    "unicode_decimal": 59011
+  }, {
+    "icon_id": "24923065",
+    "name": "star",
+    "font_class": "star",
+    "unicode": "e688",
+    "unicode_decimal": 59016
+  }, {
+    "icon_id": "24923066",
+    "name": "star-filled",
+    "font_class": "star-filled",
+    "unicode": "e68f",
+    "unicode_decimal": 59023
+  }, {
+    "icon_id": "24899646",
+    "name": "a-rilidaka",
+    "font_class": "calendar",
+    "unicode": "e6a0",
+    "unicode_decimal": 59040
+  }, {
+    "icon_id": "24899647",
+    "name": "fire",
+    "font_class": "fire",
+    "unicode": "e6a1",
+    "unicode_decimal": 59041
+  }, {
+    "icon_id": "24899648",
+    "name": "paihangbang",
+    "font_class": "medal",
+    "unicode": "e6a2",
+    "unicode_decimal": 59042
+  }, {
+    "icon_id": "24899649",
+    "name": "font",
+    "font_class": "font",
+    "unicode": "e6a3",
+    "unicode_decimal": 59043
+  }, {
+    "icon_id": "24899650",
+    "name": "gift",
+    "font_class": "gift",
+    "unicode": "e6a4",
+    "unicode_decimal": 59044
+  }, {
+    "icon_id": "24899651",
+    "name": "link",
+    "font_class": "link",
+    "unicode": "e6a5",
+    "unicode_decimal": 59045
+  }, {
+    "icon_id": "24899652",
+    "name": "notification",
+    "font_class": "notification",
+    "unicode": "e6a6",
+    "unicode_decimal": 59046
+  }, {
+    "icon_id": "24899653",
+    "name": "staff",
+    "font_class": "staff",
+    "unicode": "e6a7",
+    "unicode_decimal": 59047
+  }, {
+    "icon_id": "24899654",
+    "name": "VIP",
+    "font_class": "vip",
+    "unicode": "e6a8",
+    "unicode_decimal": 59048
+  }, {
+    "icon_id": "24899655",
+    "name": "folder_add",
+    "font_class": "folder-add",
+    "unicode": "e6a9",
+    "unicode_decimal": 59049
+  }, {
+    "icon_id": "24899656",
+    "name": "tune",
+    "font_class": "tune",
+    "unicode": "e6aa",
+    "unicode_decimal": 59050
+  }, {
+    "icon_id": "24899657",
+    "name": "shimingrenzheng",
+    "font_class": "auth",
+    "unicode": "e6ab",
+    "unicode_decimal": 59051
+  }, {
+    "icon_id": "24899565",
+    "name": "person",
+    "font_class": "person",
+    "unicode": "e699",
+    "unicode_decimal": 59033
+  }, {
+    "icon_id": "24899566",
+    "name": "email-filled",
+    "font_class": "email-filled",
+    "unicode": "e69a",
+    "unicode_decimal": 59034
+  }, {
+    "icon_id": "24899567",
+    "name": "phone-filled",
+    "font_class": "phone-filled",
+    "unicode": "e69b",
+    "unicode_decimal": 59035
+  }, {
+    "icon_id": "24899568",
+    "name": "phone",
+    "font_class": "phone",
+    "unicode": "e69c",
+    "unicode_decimal": 59036
+  }, {
+    "icon_id": "24899570",
+    "name": "email",
+    "font_class": "email",
+    "unicode": "e69e",
+    "unicode_decimal": 59038
+  }, {
+    "icon_id": "24899571",
+    "name": "personadd",
+    "font_class": "personadd",
+    "unicode": "e69f",
+    "unicode_decimal": 59039
+  }, {
+    "icon_id": "24899558",
+    "name": "chatboxes-filled",
+    "font_class": "chatboxes-filled",
+    "unicode": "e692",
+    "unicode_decimal": 59026
+  }, {
+    "icon_id": "24899559",
+    "name": "contact",
+    "font_class": "contact",
+    "unicode": "e693",
+    "unicode_decimal": 59027
+  }, {
+    "icon_id": "24899560",
+    "name": "chatbubble-filled",
+    "font_class": "chatbubble-filled",
+    "unicode": "e694",
+    "unicode_decimal": 59028
+  }, {
+    "icon_id": "24899561",
+    "name": "contact-filled",
+    "font_class": "contact-filled",
+    "unicode": "e695",
+    "unicode_decimal": 59029
+  }, {
+    "icon_id": "24899562",
+    "name": "chatboxes",
+    "font_class": "chatboxes",
+    "unicode": "e696",
+    "unicode_decimal": 59030
+  }, {
+    "icon_id": "24899563",
+    "name": "chatbubble",
+    "font_class": "chatbubble",
+    "unicode": "e697",
+    "unicode_decimal": 59031
+  }, {
+    "icon_id": "24881290",
+    "name": "upload-filled",
+    "font_class": "upload-filled",
+    "unicode": "e68e",
+    "unicode_decimal": 59022
+  }, {
+    "icon_id": "24881292",
+    "name": "upload",
+    "font_class": "upload",
+    "unicode": "e690",
+    "unicode_decimal": 59024
+  }, {
+    "icon_id": "24881293",
+    "name": "weixin",
+    "font_class": "weixin",
+    "unicode": "e691",
+    "unicode_decimal": 59025
+  }, {
+    "icon_id": "24881274",
+    "name": "compose",
+    "font_class": "compose",
+    "unicode": "e67f",
+    "unicode_decimal": 59007
+  }, {
+    "icon_id": "24881275",
+    "name": "qq",
+    "font_class": "qq",
+    "unicode": "e680",
+    "unicode_decimal": 59008
+  }, {
+    "icon_id": "24881276",
+    "name": "download-filled",
+    "font_class": "download-filled",
+    "unicode": "e681",
+    "unicode_decimal": 59009
+  }, {
+    "icon_id": "24881277",
+    "name": "pengyouquan",
+    "font_class": "pyq",
+    "unicode": "e682",
+    "unicode_decimal": 59010
+  }, {
+    "icon_id": "24881279",
+    "name": "sound",
+    "font_class": "sound",
+    "unicode": "e684",
+    "unicode_decimal": 59012
+  }, {
+    "icon_id": "24881280",
+    "name": "trash-filled",
+    "font_class": "trash-filled",
+    "unicode": "e685",
+    "unicode_decimal": 59013
+  }, {
+    "icon_id": "24881281",
+    "name": "sound-filled",
+    "font_class": "sound-filled",
+    "unicode": "e686",
+    "unicode_decimal": 59014
+  }, {
+    "icon_id": "24881282",
+    "name": "trash",
+    "font_class": "trash",
+    "unicode": "e687",
+    "unicode_decimal": 59015
+  }, {
+    "icon_id": "24881284",
+    "name": "videocam-filled",
+    "font_class": "videocam-filled",
+    "unicode": "e689",
+    "unicode_decimal": 59017
+  }, {
+    "icon_id": "24881285",
+    "name": "spinner-cycle",
+    "font_class": "spinner-cycle",
+    "unicode": "e68a",
+    "unicode_decimal": 59018
+  }, {
+    "icon_id": "24881286",
+    "name": "weibo",
+    "font_class": "weibo",
+    "unicode": "e68b",
+    "unicode_decimal": 59019
+  }, {
+    "icon_id": "24881288",
+    "name": "videocam",
+    "font_class": "videocam",
+    "unicode": "e68c",
+    "unicode_decimal": 59020
+  }, {
+    "icon_id": "24881289",
+    "name": "download",
+    "font_class": "download",
+    "unicode": "e68d",
+    "unicode_decimal": 59021
+  }, {
+    "icon_id": "24879601",
+    "name": "help",
+    "font_class": "help",
+    "unicode": "e679",
+    "unicode_decimal": 59001
+  }, {
+    "icon_id": "24879602",
+    "name": "navigate-filled",
+    "font_class": "navigate-filled",
+    "unicode": "e67a",
+    "unicode_decimal": 59002
+  }, {
+    "icon_id": "24879603",
+    "name": "plusempty",
+    "font_class": "plusempty",
+    "unicode": "e67b",
+    "unicode_decimal": 59003
+  }, {
+    "icon_id": "24879604",
+    "name": "smallcircle",
+    "font_class": "smallcircle",
+    "unicode": "e67c",
+    "unicode_decimal": 59004
+  }, {
+    "icon_id": "24879605",
+    "name": "minus-filled",
+    "font_class": "minus-filled",
+    "unicode": "e67d",
+    "unicode_decimal": 59005
+  }, {
+    "icon_id": "24879606",
+    "name": "micoff",
+    "font_class": "micoff",
+    "unicode": "e67e",
+    "unicode_decimal": 59006
+  }, {
+    "icon_id": "24879588",
+    "name": "closeempty",
+    "font_class": "closeempty",
+    "unicode": "e66c",
+    "unicode_decimal": 58988
+  }, {
+    "icon_id": "24879589",
+    "name": "clear",
+    "font_class": "clear",
+    "unicode": "e66d",
+    "unicode_decimal": 58989
+  }, {
+    "icon_id": "24879590",
+    "name": "navigate",
+    "font_class": "navigate",
+    "unicode": "e66e",
+    "unicode_decimal": 58990
+  }, {
+    "icon_id": "24879591",
+    "name": "minus",
+    "font_class": "minus",
+    "unicode": "e66f",
+    "unicode_decimal": 58991
+  }, {
+    "icon_id": "24879592",
+    "name": "image",
+    "font_class": "image",
+    "unicode": "e670",
+    "unicode_decimal": 58992
+  }, {
+    "icon_id": "24879593",
+    "name": "mic",
+    "font_class": "mic",
+    "unicode": "e671",
+    "unicode_decimal": 58993
+  }, {
+    "icon_id": "24879594",
+    "name": "paperplane",
+    "font_class": "paperplane",
+    "unicode": "e672",
+    "unicode_decimal": 58994
+  }, {
+    "icon_id": "24879595",
+    "name": "close",
+    "font_class": "close",
+    "unicode": "e673",
+    "unicode_decimal": 58995
+  }, {
+    "icon_id": "24879596",
+    "name": "help-filled",
+    "font_class": "help-filled",
+    "unicode": "e674",
+    "unicode_decimal": 58996
+  }, {
+    "icon_id": "24879597",
+    "name": "plus-filled",
+    "font_class": "paperplane-filled",
+    "unicode": "e675",
+    "unicode_decimal": 58997
+  }, {
+    "icon_id": "24879598",
+    "name": "plus",
+    "font_class": "plus",
+    "unicode": "e676",
+    "unicode_decimal": 58998
+  }, {
+    "icon_id": "24879599",
+    "name": "mic-filled",
+    "font_class": "mic-filled",
+    "unicode": "e677",
+    "unicode_decimal": 58999
+  }, {
+    "icon_id": "24879600",
+    "name": "image-filled",
+    "font_class": "image-filled",
+    "unicode": "e678",
+    "unicode_decimal": 59000
+  }, {
+    "icon_id": "24855900",
+    "name": "locked-filled",
+    "font_class": "locked-filled",
+    "unicode": "e668",
+    "unicode_decimal": 58984
+  }, {
+    "icon_id": "24855901",
+    "name": "info",
+    "font_class": "info",
+    "unicode": "e669",
+    "unicode_decimal": 58985
+  }, {
+    "icon_id": "24855903",
+    "name": "locked",
+    "font_class": "locked",
+    "unicode": "e66b",
+    "unicode_decimal": 58987
+  }, {
+    "icon_id": "24855884",
+    "name": "camera-filled",
+    "font_class": "camera-filled",
+    "unicode": "e658",
+    "unicode_decimal": 58968
+  }, {
+    "icon_id": "24855885",
+    "name": "chat-filled",
+    "font_class": "chat-filled",
+    "unicode": "e659",
+    "unicode_decimal": 58969
+  }, {
+    "icon_id": "24855886",
+    "name": "camera",
+    "font_class": "camera",
+    "unicode": "e65a",
+    "unicode_decimal": 58970
+  }, {
+    "icon_id": "24855887",
+    "name": "circle",
+    "font_class": "circle",
+    "unicode": "e65b",
+    "unicode_decimal": 58971
+  }, {
+    "icon_id": "24855888",
+    "name": "checkmarkempty",
+    "font_class": "checkmarkempty",
+    "unicode": "e65c",
+    "unicode_decimal": 58972
+  }, {
+    "icon_id": "24855889",
+    "name": "chat",
+    "font_class": "chat",
+    "unicode": "e65d",
+    "unicode_decimal": 58973
+  }, {
+    "icon_id": "24855890",
+    "name": "circle-filled",
+    "font_class": "circle-filled",
+    "unicode": "e65e",
+    "unicode_decimal": 58974
+  }, {
+    "icon_id": "24855891",
+    "name": "flag",
+    "font_class": "flag",
+    "unicode": "e65f",
+    "unicode_decimal": 58975
+  }, {
+    "icon_id": "24855892",
+    "name": "flag-filled",
+    "font_class": "flag-filled",
+    "unicode": "e660",
+    "unicode_decimal": 58976
+  }, {
+    "icon_id": "24855893",
+    "name": "gear-filled",
+    "font_class": "gear-filled",
+    "unicode": "e661",
+    "unicode_decimal": 58977
+  }, {
+    "icon_id": "24855894",
+    "name": "home",
+    "font_class": "home",
+    "unicode": "e662",
+    "unicode_decimal": 58978
+  }, {
+    "icon_id": "24855895",
+    "name": "home-filled",
+    "font_class": "home-filled",
+    "unicode": "e663",
+    "unicode_decimal": 58979
+  }, {
+    "icon_id": "24855896",
+    "name": "gear",
+    "font_class": "gear",
+    "unicode": "e664",
+    "unicode_decimal": 58980
+  }, {
+    "icon_id": "24855897",
+    "name": "smallcircle-filled",
+    "font_class": "smallcircle-filled",
+    "unicode": "e665",
+    "unicode_decimal": 58981
+  }, {
+    "icon_id": "24855898",
+    "name": "map-filled",
+    "font_class": "map-filled",
+    "unicode": "e666",
+    "unicode_decimal": 58982
+  }, {
+    "icon_id": "24855899",
+    "name": "map",
+    "font_class": "map",
+    "unicode": "e667",
+    "unicode_decimal": 58983
+  }, {
+    "icon_id": "24855825",
+    "name": "refresh-filled",
+    "font_class": "refresh-filled",
+    "unicode": "e656",
+    "unicode_decimal": 58966
+  }, {
+    "icon_id": "24855826",
+    "name": "refresh",
+    "font_class": "refresh",
+    "unicode": "e657",
+    "unicode_decimal": 58967
+  }, {
+    "icon_id": "24855808",
+    "name": "cloud-upload",
+    "font_class": "cloud-upload",
+    "unicode": "e645",
+    "unicode_decimal": 58949
+  }, {
+    "icon_id": "24855809",
+    "name": "cloud-download-filled",
+    "font_class": "cloud-download-filled",
+    "unicode": "e646",
+    "unicode_decimal": 58950
+  }, {
+    "icon_id": "24855810",
+    "name": "cloud-download",
+    "font_class": "cloud-download",
+    "unicode": "e647",
+    "unicode_decimal": 58951
+  }, {
+    "icon_id": "24855811",
+    "name": "cloud-upload-filled",
+    "font_class": "cloud-upload-filled",
+    "unicode": "e648",
+    "unicode_decimal": 58952
+  }, {
+    "icon_id": "24855813",
+    "name": "redo",
+    "font_class": "redo",
+    "unicode": "e64a",
+    "unicode_decimal": 58954
+  }, {
+    "icon_id": "24855814",
+    "name": "images-filled",
+    "font_class": "images-filled",
+    "unicode": "e64b",
+    "unicode_decimal": 58955
+  }, {
+    "icon_id": "24855815",
+    "name": "undo-filled",
+    "font_class": "undo-filled",
+    "unicode": "e64c",
+    "unicode_decimal": 58956
+  }, {
+    "icon_id": "24855816",
+    "name": "more",
+    "font_class": "more",
+    "unicode": "e64d",
+    "unicode_decimal": 58957
+  }, {
+    "icon_id": "24855817",
+    "name": "more-filled",
+    "font_class": "more-filled",
+    "unicode": "e64e",
+    "unicode_decimal": 58958
+  }, {
+    "icon_id": "24855818",
+    "name": "undo",
+    "font_class": "undo",
+    "unicode": "e64f",
+    "unicode_decimal": 58959
+  }, {
+    "icon_id": "24855819",
+    "name": "images",
+    "font_class": "images",
+    "unicode": "e650",
+    "unicode_decimal": 58960
+  }, {
+    "icon_id": "24855821",
+    "name": "paperclip",
+    "font_class": "paperclip",
+    "unicode": "e652",
+    "unicode_decimal": 58962
+  }, {
+    "icon_id": "24855822",
+    "name": "settings",
+    "font_class": "settings",
+    "unicode": "e653",
+    "unicode_decimal": 58963
+  }, {
+    "icon_id": "24855823",
+    "name": "search",
+    "font_class": "search",
+    "unicode": "e654",
+    "unicode_decimal": 58964
+  }, {
+    "icon_id": "24855824",
+    "name": "redo-filled",
+    "font_class": "redo-filled",
+    "unicode": "e655",
+    "unicode_decimal": 58965
+  }, {
+    "icon_id": "24841702",
+    "name": "list",
+    "font_class": "list",
+    "unicode": "e644",
+    "unicode_decimal": 58948
+  }, {
+    "icon_id": "24841489",
+    "name": "mail-open-filled",
+    "font_class": "mail-open-filled",
+    "unicode": "e63a",
+    "unicode_decimal": 58938
+  }, {
+    "icon_id": "24841491",
+    "name": "hand-thumbsdown-filled",
+    "font_class": "hand-down-filled",
+    "unicode": "e63c",
+    "unicode_decimal": 58940
+  }, {
+    "icon_id": "24841492",
+    "name": "hand-thumbsdown",
+    "font_class": "hand-down",
+    "unicode": "e63d",
+    "unicode_decimal": 58941
+  }, {
+    "icon_id": "24841493",
+    "name": "hand-thumbsup-filled",
+    "font_class": "hand-up-filled",
+    "unicode": "e63e",
+    "unicode_decimal": 58942
+  }, {
+    "icon_id": "24841494",
+    "name": "hand-thumbsup",
+    "font_class": "hand-up",
+    "unicode": "e63f",
+    "unicode_decimal": 58943
+  }, {
+    "icon_id": "24841496",
+    "name": "heart-filled",
+    "font_class": "heart-filled",
+    "unicode": "e641",
+    "unicode_decimal": 58945
+  }, {
+    "icon_id": "24841498",
+    "name": "mail-open",
+    "font_class": "mail-open",
+    "unicode": "e643",
+    "unicode_decimal": 58947
+  }, {
+    "icon_id": "24841488",
+    "name": "heart",
+    "font_class": "heart",
+    "unicode": "e639",
+    "unicode_decimal": 58937
+  }, {
+    "icon_id": "24839963",
+    "name": "loop",
+    "font_class": "loop",
+    "unicode": "e633",
+    "unicode_decimal": 58931
+  }, {
+    "icon_id": "24839866",
+    "name": "pulldown",
+    "font_class": "pulldown",
+    "unicode": "e632",
+    "unicode_decimal": 58930
+  }, {
+    "icon_id": "24813798",
+    "name": "scan",
+    "font_class": "scan",
+    "unicode": "e62a",
+    "unicode_decimal": 58922
+  }, {
+    "icon_id": "24813786",
+    "name": "bars",
+    "font_class": "bars",
+    "unicode": "e627",
+    "unicode_decimal": 58919
+  }, {
+    "icon_id": "24813788",
+    "name": "cart-filled",
+    "font_class": "cart-filled",
+    "unicode": "e629",
+    "unicode_decimal": 58921
+  }, {
+    "icon_id": "24813790",
+    "name": "checkbox",
+    "font_class": "checkbox",
+    "unicode": "e62b",
+    "unicode_decimal": 58923
+  }, {
+    "icon_id": "24813791",
+    "name": "checkbox-filled",
+    "font_class": "checkbox-filled",
+    "unicode": "e62c",
+    "unicode_decimal": 58924
+  }, {
+    "icon_id": "24813794",
+    "name": "shop",
+    "font_class": "shop",
+    "unicode": "e62f",
+    "unicode_decimal": 58927
+  }, {
+    "icon_id": "24813795",
+    "name": "headphones",
+    "font_class": "headphones",
+    "unicode": "e630",
+    "unicode_decimal": 58928
+  }, {
+    "icon_id": "24813796",
+    "name": "cart",
+    "font_class": "cart",
+    "unicode": "e631",
+    "unicode_decimal": 58929
+  }]
+};
+exports.default = _default;
+
+/***/ }),
+/* 539 */,
+/* 540 */,
+/* 541 */,
+/* 542 */,
+/* 543 */,
+/* 544 */,
+/* 545 */,
+/* 546 */,
+/* 547 */,
+/* 548 */,
+/* 549 */,
+/* 550 */,
+/* 551 */,
+/* 552 */,
+/* 553 */
+/*!*******************************************************************************************************!*\
+  !*** F:/wxProgram/cloudForum/uni_modules/uni-transition/components/uni-transition/createAnimation.js ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createAnimation = createAnimation;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ 23));
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ 24));
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+// const defaultOption = {
+// 	duration: 300,
+// 	timingFunction: 'linear',
+// 	delay: 0,
+// 	transformOrigin: '50% 50% 0'
+// }
+var MPAnimation = /*#__PURE__*/function () {
+  function MPAnimation(options, _this) {
+    (0, _classCallCheck2.default)(this, MPAnimation);
+    this.options = options;
+    // 在iOS10+QQ小程序平台下，传给原生的对象一定是个普通对象而不是Proxy对象，否则会报parameter should be Object instead of ProxyObject的错误
+    this.animation = uni.createAnimation(_objectSpread({}, options));
+    this.currentStepAnimates = {};
+    this.next = 0;
+    this.$ = _this;
+  }
+  (0, _createClass2.default)(MPAnimation, [{
+    key: "_nvuePushAnimates",
+    value: function _nvuePushAnimates(type, args) {
+      var aniObj = this.currentStepAnimates[this.next];
+      var styles = {};
+      if (!aniObj) {
+        styles = {
+          styles: {},
+          config: {}
+        };
+      } else {
+        styles = aniObj;
+      }
+      if (animateTypes1.includes(type)) {
+        if (!styles.styles.transform) {
+          styles.styles.transform = '';
+        }
+        var unit = '';
+        if (type === 'rotate') {
+          unit = 'deg';
+        }
+        styles.styles.transform += "".concat(type, "(").concat(args + unit, ") ");
+      } else {
+        styles.styles[type] = "".concat(args);
+      }
+      this.currentStepAnimates[this.next] = styles;
+    }
+  }, {
+    key: "_animateRun",
+    value: function _animateRun() {
+      var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var ref = this.$.$refs['ani'].ref;
+      if (!ref) return;
+      return new Promise(function (resolve, reject) {
+        nvueAnimation.transition(ref, _objectSpread({
+          styles: styles
+        }, config), function (res) {
+          resolve();
+        });
+      });
+    }
+  }, {
+    key: "_nvueNextAnimate",
+    value: function _nvueNextAnimate(animates) {
+      var _this2 = this;
+      var step = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var fn = arguments.length > 2 ? arguments[2] : undefined;
+      var obj = animates[step];
+      if (obj) {
+        var styles = obj.styles,
+          config = obj.config;
+        this._animateRun(styles, config).then(function () {
+          step += 1;
+          _this2._nvueNextAnimate(animates, step, fn);
+        });
+      } else {
+        this.currentStepAnimates = {};
+        typeof fn === 'function' && fn();
+        this.isEnd = true;
+      }
+    }
+  }, {
+    key: "step",
+    value: function step() {
+      var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      this.animation.step(config);
+      return this;
+    }
+  }, {
+    key: "run",
+    value: function run(fn) {
+      this.$.animationData = this.animation.export();
+      this.$.timer = setTimeout(function () {
+        typeof fn === 'function' && fn();
+      }, this.$.durationTime);
+    }
+  }]);
+  return MPAnimation;
+}();
+var animateTypes1 = ['matrix', 'matrix3d', 'rotate', 'rotate3d', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scale3d', 'scaleX', 'scaleY', 'scaleZ', 'skew', 'skewX', 'skewY', 'translate', 'translate3d', 'translateX', 'translateY', 'translateZ'];
+var animateTypes2 = ['opacity', 'backgroundColor'];
+var animateTypes3 = ['width', 'height', 'left', 'right', 'top', 'bottom'];
+animateTypes1.concat(animateTypes2, animateTypes3).forEach(function (type) {
+  MPAnimation.prototype[type] = function () {
+    var _this$animation;
+    (_this$animation = this.animation)[type].apply(_this$animation, arguments);
+    return this;
+  };
+});
+function createAnimation(option, _this) {
+  if (!_this) return;
+  clearTimeout(_this.timer);
+  return new MPAnimation(option, _this);
+}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ })

@@ -3,13 +3,16 @@
 		<view class="head">
 			<view class="userInfo">
 				<view class="avatar">
-					<image :src="itemInfo.user_id[0].avatar_file ? itemInfo.user_id[0].avatar_file : '../../static/userdefault.png'" mode=" aspectFill" />
+					<image
+						:src="itemInfo.user_id[0].avatar_file ? itemInfo.user_id[0].avatar_file.url : '../../static/userdefault.png'"
+						mode=" aspectFill" />
 				</view>
 				<view class="name">
 					{{itemInfo.user_id[0].nickname ? itemInfo.user_id[0].nickname : itemInfo.user_id[0].username  }}
 				</view>
 				<view class="time">
-					<uni-dateformat :date="itemInfo.publish_date" :threshold="[60000,360000*24*30]" format="MM月dd hh:mm" />
+					<uni-dateformat :date="itemInfo.publish_date" :threshold="[60000,360000*24*30]"
+						format="MM月dd hh:mm" />
 				</view>
 
 			</view>
@@ -26,7 +29,7 @@
 			</view>
 			<view class="text" @click="toDetail">
 				<view class="textItem">
-					{{itemInfo.descrtion}}
+					{{itemInfo.descrtion ?itemInfo.descrtion : '' }}
 				</view>
 			</view>
 			<view class="picList">
@@ -68,7 +71,7 @@
 					province: "",
 					descrtion: '',
 					piculs: [],
-					user_id:[],
+					user_id: [],
 				}
 			}
 		},
@@ -77,19 +80,22 @@
 				picList: [1]
 			};
 		},
-		methods:{
+		onLoad(){
+			// console.log('fuck',this.itemInfo)
+		},
+		methods: {
 			// 点击缩略图
-			clickImage:function(index){
+			clickImage: function(index) {
 				uni.previewImage({
-					urls:this.itemInfo.piculs,
-					current:index
+					urls: this.itemInfo.piculs,
+					current: index
 				})
 			},
-			
+
 			//  跳转详情页面
-			toDetail:function(){
+			toDetail: function() {
 				uni.navigateTo({
-					url:'/pages/details/details?id='+ this.itemInfo._id
+					url: '/pages/details/details?id=' + this.itemInfo._id
 				})
 			}
 		}

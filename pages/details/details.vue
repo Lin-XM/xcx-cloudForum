@@ -164,6 +164,11 @@
 					res.result.data.islike = islike
 					this.data = res.result.data
 					this.loadingStatus = false
+				}).catch(error=>{
+					uni.showToast({
+						title:"未登录或出现错误！",
+						icon:'error'
+					})
 				})
 			}
 		}
