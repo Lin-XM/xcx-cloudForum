@@ -11,8 +11,7 @@
 					<view class="text" v-if="hasLogin">
 						<view class="nickname">{{userInfo.username || userInfo.nickname  }}</view>
 						<view class="year">
-							<uni-dateformat :date="Date.now() - 360000"
-								:threshold="[3600,99*365*24*60*60*1000]"></uni-dateformat>
+							<uni-dateformat :date="userInfo.register_date" :threshold="[3600,99*365*24*60*60*1000]"></uni-dateformat>
 							注册
 						</view>
 					</view>
@@ -107,9 +106,12 @@
 			userInfo() {
 				return store.userInfo
 			},
+			tokeExpired(){
+			}
 
 		},
 		methods: {
+			// token 失效
 			// 判断是否是登录用户
 			// 退出登录
 			logout: function() {

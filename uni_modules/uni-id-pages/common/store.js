@@ -5,7 +5,11 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 const db = uniCloud.database();
 const usersTable = db.collection('uni-id-users')
 
-let hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo')||{}
+let hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo') || {}
+let tokenExpired = uniCloud.getCurrentUserInfo().tokenExpired - Date.now() > 0 ? true : false
+if(!tokenExpired){
+	hostUserInfo = {}
+}
 // console.log( hostUserInfo);
 const data = {
 	userInfo: hostUserInfo,
@@ -13,6 +17,8 @@ const data = {
 }
 
 // console.log('data', data);
+// console.log(uniCloud.getCurrentUserInfo().tokenExpired - Date.now())
+
 // 定义 mutations, 修改属性
 export const mutations = {
 	// data不为空，表示传递要更新的值(注意不是覆盖是合并),什么也不传时，直接查库获取更新
@@ -42,7 +48,7 @@ export const mutations = {
 			})
 			try {
 				let res = await usersTable.where("'_id' == $cloudEnv_uid")
-					.field('mobile,nickname,username,email,avatar_file')
+					.field('mobile,nickname,username,email,avatar_file,register_date')
 					.get()
 
 				const realNameRes = await uniIdCo.getRealNameInfo()
@@ -53,15 +59,21 @@ export const mutations = {
 					realNameAuth: realNameRes
 				})
 			} catch (e) {
-				this.setUserInfo({},{cover:true})
+				this.setUserInfo({}, {
+					cover: true
+				})
 				console.error(e.message, e.errCode);
 			}
 		}
 	},
-	async setUserInfo(data, {cover}={cover:false}) {
+	async setUserInfo(data, {
+		cover
+	} = {
+		cover: false
+	}) {
 		// console.log('set-userInfo', data);
-		let userInfo = cover?data:Object.assign(store.userInfo,data)
-		store.userInfo = Object.assign({},userInfo)
+		let userInfo = cover ? data : Object.assign(store.userInfo, data)
+		store.userInfo = Object.assign({}, userInfo)
 		store.hasLogin = Object.keys(store.userInfo).length != 0
 		// console.log('store.userInfo', store.userInfo);
 		uni.setStorageSync('uni-id-pages-userInfo', store.userInfo)
@@ -69,10 +81,10 @@ export const mutations = {
 	},
 	async logout() {
 		// 1. 已经过期就不需要调用服务端的注销接口	2.即使调用注销接口失败，不能阻塞客户端
-		if(uniCloud.getCurrentUserInfo().tokenExpired > Date.now()){
-			try{
+		if (uniCloud.getCurrentUserInfo().tokenExpired > Date.now()) {
+			try {
 				await uniIdCo.logout()
-			}catch(e){
+			} catch (e) {
 				console.error(e);
 			}
 		}
@@ -83,11 +95,15 @@ export const mutations = {
 			url: `/${pagesJson.uniIdRouter && pagesJson.uniIdRouter.loginPage ? pagesJson.uniIdRouter.loginPage: 'pages/index/index'}`,
 		});
 		uni.$emit('uni-id-pages-logout')
-		this.setUserInfo({},{cover:true})
+		this.setUserInfo({}, {
+			cover: true
+		})
 	},
 
-	loginBack (e = {}) {
-		const {uniIdRedirectUrl = ''} = e
+	loginBack(e = {}) {
+		const {
+			uniIdRedirectUrl = ''
+		} = e
 		let delta = 0; //判断需要返回几层
 		let pages = getCurrentPages();
 		// console.log(pages);
@@ -102,9 +118,9 @@ export const mutations = {
 				url: uniIdRedirectUrl,
 				fail: (err1) => {
 					uni.switchTab({
-						url:uniIdRedirectUrl,
+						url: uniIdRedirectUrl,
 						fail: (err2) => {
-							console.log(err1,err2)
+							console.log(err1, err2)
 						}
 					})
 				}
@@ -128,7 +144,7 @@ export const mutations = {
 			delta
 		})
 	},
-	loginSuccess(e = {}){
+	loginSuccess(e = {}) {
 		const {
 			showToast = true, toastText = '登录成功', autoBack = true, uniIdRedirectUrl = '', passwordConfirmed
 		} = e
@@ -146,7 +162,9 @@ export const mutations = {
 
 		if (config.setPasswordAfterLogin && !passwordConfirmed) {
 			return uni.redirectTo({
-				url: uniIdRedirectUrl ? `/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?uniIdRedirectUrl=${uniIdRedirectUrl}&loginType=${e.loginType}`: `/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?loginType=${e.loginType}`,
+				url: uniIdRedirectUrl ?
+					`/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?uniIdRedirectUrl=${uniIdRedirectUrl}&loginType=${e.loginType}` :
+					`/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?loginType=${e.loginType}`,
 				fail: (err) => {
 					console.log(err)
 				}
@@ -154,7 +172,9 @@ export const mutations = {
 		}
 
 		if (autoBack) {
-			this.loginBack({uniIdRedirectUrl})
+			this.loginBack({
+				uniIdRedirectUrl
+			})
 		}
 	}
 
