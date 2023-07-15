@@ -53,7 +53,7 @@
 		getImageSrc,
 		getProvince
 	} from '../../utils/tools.js'
-	let hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo') || {}
+	import {store} from '../../uni_modules/uni-id-pages/common/store.js'
 	export default {
 		data() {
 			return {
@@ -70,8 +70,6 @@
 					piculs: undefined, // 缩略图
 					province: ""
 				},
-				userinfo:hostUserInfo,
-				hasLogin:Object.keys(hostUserInfo).length !=0
 			};
 		},
 		onLoad(e) {
@@ -80,7 +78,7 @@
 		methods: {
 			// 判断是否登录
 			isLogin:function(){
-				if(!this.hasLogin){
+				if(!store.hasLogin){
 					uni.showToast({
 						title:"用户未登录！",
 						icon:"error"

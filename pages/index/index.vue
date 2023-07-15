@@ -32,7 +32,7 @@
 				navList: [{
 						id: 1,
 						name: "最新",
-						type: "publishDate"
+						type: "publish_date"
 					},
 					{
 						id: 2,

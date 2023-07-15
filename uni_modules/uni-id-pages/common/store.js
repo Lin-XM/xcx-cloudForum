@@ -92,7 +92,7 @@ export const mutations = {
 		uni.setStorageSync('uni_id_token_expired', 0)
 		uni.redirectTo({
 			//      pagesJson.uniIdRouter 表示是否使用免密登录
-			url: `/${pagesJson.uniIdRouter && pagesJson.uniIdRouter.loginPage ? pagesJson.uniIdRouter.loginPage: 'pages/index/index'}`,
+			url: `pages/index/index`,
 		});
 		uni.$emit('uni-id-pages-logout')
 		this.setUserInfo({}, {

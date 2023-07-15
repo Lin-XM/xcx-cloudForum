@@ -26950,6 +26950,10 @@ var uniIdCo = uniCloud.importObject("uni-id-co");
 var db = uniCloud.database();
 var usersTable = db.collection('uni-id-users');
 var hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo') || {};
+var tokenExpired = uniCloud.getCurrentUserInfo().tokenExpired - Date.now() > 0 ? true : false;
+if (!tokenExpired) {
+  hostUserInfo = {};
+}
 // console.log( hostUserInfo);
 var data = {
   userInfo: hostUserInfo,
@@ -26957,6 +26961,8 @@ var data = {
 };
 
 // console.log('data', data);
+// console.log(uniCloud.getCurrentUserInfo().tokenExpired - Date.now())
+
 // 定义 mutations, 修改属性
 var mutations = {
   // data不为空，表示传递要更新的值(注意不是覆盖是合并),什么也不传时，直接查库获取更新
@@ -26999,7 +27005,7 @@ var mutations = {
               });
               _context.prev = 6;
               _context.next = 9;
-              return usersTable.where("'_id' == $cloudEnv_uid").field('mobile,nickname,username,email,avatar_file').get();
+              return usersTable.where("'_id' == $cloudEnv_uid").field('mobile,nickname,username,email,avatar_file,register_date').get();
             case 9:
               res = _context.sent;
               _context.next = 12;
@@ -27079,7 +27085,7 @@ var mutations = {
               uni.setStorageSync('uni_id_token_expired', 0);
               uni.redirectTo({
                 //      pagesJson.uniIdRouter 表示是否使用免密登录
-                url: "/".concat(_pages.default.uniIdRouter && _pages.default.uniIdRouter.loginPage ? _pages.default.uniIdRouter.loginPage : 'pages/index/index')
+                url: "pages/index/index"
               });
               uni.$emit('uni-id-pages-logout');
               _this2.setUserInfo({}, {
@@ -27269,8 +27275,11 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getAvatar = getAvatar;
 exports.getImageSrc = getImageSrc;
+exports.getNickname = getNickname;
 exports.getProvince = getProvince;
+exports.getUserIp = getUserIp;
 // 获取 image 的网络 URL地址
 function getImageSrc(richText) {
   var num = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
@@ -27330,6 +27339,16 @@ function getUserIp() {
       }
     });
   });
+}
+
+/// 获取用户昵称
+function getNickname(itemInfo) {
+  var _itemInfo$user_id$, _itemInfo$user_id$2, _itemInfo$user_id$3;
+  return ((_itemInfo$user_id$ = itemInfo.user_id[0]) === null || _itemInfo$user_id$ === void 0 ? void 0 : _itemInfo$user_id$.nickname) || ((_itemInfo$user_id$2 = itemInfo.user_id[0]) === null || _itemInfo$user_id$2 === void 0 ? void 0 : _itemInfo$user_id$2.username) || ((_itemInfo$user_id$3 = itemInfo.user_id[0]) === null || _itemInfo$user_id$3 === void 0 ? void 0 : _itemInfo$user_id$3.moblie) || "请设置名称";
+}
+// 获取头像
+function getAvatar(itemInfo) {
+  return itemInfo.user_id[0].avatar_file ? itemInfo.user_id[0].avatar_file.url : '../../static/userdefault.png';
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 

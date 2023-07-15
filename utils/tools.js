@@ -32,7 +32,7 @@ export function getProvince() {
 	})
 };
 // 获取发布文章的用户当前IP的地址
-function getUserIp() {
+export function getUserIp() {
 	return new Promise((resolve, reject) => {
 		uni.request({
 			// 参数 key 为高德地图的开发者key，调用次数每日 5000
@@ -55,4 +55,14 @@ function getUserIp() {
 		})
 	})
 
+}
+
+/// 获取用户昵称
+export function getNickname(itemInfo){
+	return itemInfo.user_id[0]?.nickname ||   itemInfo.user_id[0]?.username || itemInfo.user_id[0]?.moblie || "请设置名称"
+	
+}
+// 获取头像
+export function getAvatar(itemInfo){
+	return itemInfo.user_id[0].avatar_file ? itemInfo.user_id[0].avatar_file.url : '../../static/userdefault.png'
 }

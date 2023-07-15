@@ -104,6 +104,19 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.getAvatar(_vm.itemInfo)
+  var m1 = _vm.getNickname(_vm.itemInfo)
+  var g0 = _vm.itemInfo.piculs.length
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0,
+        m1: m1,
+        g0: g0,
+      },
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -143,6 +156,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _tools = __webpack_require__(/*! ../../utils/tools.js */ 192);
 //
 //
 //
@@ -228,6 +242,8 @@ var _default = {
     // console.log('fuck',this.itemInfo)
   },
   methods: {
+    getNickname: _tools.getNickname,
+    getAvatar: _tools.getAvatar,
     // 点击缩略图
     clickImage: function clickImage(index) {
       uni.previewImage({

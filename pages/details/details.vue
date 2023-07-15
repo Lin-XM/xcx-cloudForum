@@ -9,12 +9,12 @@
 				<view class="userinfo">
 					<view class="avatar">
 						<image
-							:src="data.user_id[0].avatar_file ? data.user_id[0].avatar_file.url  : '../../static/userdefault.png'"
+							:src="getAvatar(data)"
 							mode="aspectFill"></image>
 					</view>
 					<view class="text">
 						<view class="name">
-							{{data.user_id[0].nickname ? data.user_id[0].nickname : data.user_id[0].username }}
+							{{getNickname(data) }}
 						</view>
 						<view class="small">
 							<uni-dateformat :date="data.publish_date" :threshold="[60000,360000*24*30]"
@@ -42,6 +42,9 @@
 </template>
 
 <script>
+	import {getNickname,getAvatar} from '../../utils/tools.js'
+	import  pageJson from '@/pages.json'
+	import {store} from '../../uni_modules/uni-id-pages/common/store.js'
 	const db = uniCloud.database()
 	const utils = uniCloud.importObject('utils', {
 		customUI: true,
@@ -84,22 +87,40 @@
 			clearTimeout(timer)
 		},
 		methods: {
+			getNickname,getAvatar,
 			// 点赞操作
 			likeBtn: async function() {
-				let timeStart = Date.now()
-				if (timeStart - this.likeTime < 2000) {
-					uni.showToast({
-						title: "操作频繁，请稍后...",
-						icon: 'none'
+				if(store.hasLogin){
+					let timeStart = Date.now()
+					if (timeStart - this.likeTime < 2000) {
+						uni.showToast({
+							title: "操作频繁，请稍后...",
+							icon: 'none'
+						})
+						return
+					}
+					this.data.islike ? this.data.like_count-- : this.data.like_count++
+					this.data.islike = !this.data.islike
+					this.likeTime = timeStart
+					
+					// 获取用户是否在该文章点过赞
+					this.likeFunc()
+				}else{
+					uni.showModal({
+						title:"是否确认登录",
+						success:(res)=>{
+							if(res.confirm){
+								uni.navigateTo({
+									// 登录方式之后可能会变
+									// url:'uni_modules/uni-id-pages/pages/login/login-withpwd'
+									url:'/'+pageJson.uniIdRouter.loginPage
+								})
+							}
+						}
 					})
 					return
 				}
-				this.data.islike ? this.data.like_count-- : this.data.like_count++
-				this.data.islike = !this.data.islike
-				this.likeTime = timeStart
-
-				// 获取用户是否在该文章点过赞
-				this.likeFunc()
+			
 			},
 
 			// 点赞方法
@@ -150,7 +171,13 @@
 				let userTemp = db.collection('uni-id-users').field('_id,username,nickname,avatar_file').getTemp()
 				let likeTemp = db.collection('user_like').where(
 					`article_id == '${this.artId}' && user_id == $cloudEnv_uid`).getTemp()
-				db.collection(artTemp, userTemp, likeTemp).get({
+					
+				let tempArr = [artTemp, userTemp,]
+				if(store.hasLogin){
+					tempArr.push(likeTemp)
+				}
+					
+				db.collection(...tempArr).get({
 					getOne: true
 				}).then(res => {
 					console.log('结果', res)
@@ -160,15 +187,15 @@
 					uni.setNavigationBarTitle({
 						title:res.result.data.title
 					})
-					let islike = res.result.data._id.user_like.length ? true : false
+					let islike = false
+					if(store.hasLogin){
+						islike = res.result.data._id?.user_like.length ? true : false
+					}
 					res.result.data.islike = islike
 					this.data = res.result.data
 					this.loadingStatus = false
-				}).catch(error=>{
-					uni.showToast({
-						title:"未登录或出现错误！",
-						icon:'error'
-					})
+				}).catch({
+					
 				})
 			}
 		}

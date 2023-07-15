@@ -4,11 +4,11 @@
 			<view class="userInfo">
 				<view class="avatar">
 					<image
-						:src="itemInfo.user_id[0].avatar_file ? itemInfo.user_id[0].avatar_file.url : '../../static/userdefault.png'"
-						mode=" aspectFill" />
+						:src="getAvatar(itemInfo)"
+						mode="aspectFill" />
 				</view>
 				<view class="name">
-					{{itemInfo.user_id[0].nickname ? itemInfo.user_id[0].nickname : itemInfo.user_id[0].username  }}
+					{{getNickname(itemInfo) }}
 				</view>
 				<view class="time">
 					<uni-dateformat :date="itemInfo.publish_date" :threshold="[60000,360000*24*30]"
@@ -27,12 +27,12 @@
 			<view class="title" @click="toDetail">
 				{{itemInfo.title}}
 			</view>
-			<view class="text" @click="toDetail">
+			<view class="text" @click="toDetail" v-if="itemInfo.descrtion">
 				<view class="textItem">
-					{{itemInfo.descrtion ?itemInfo.descrtion : '' }}
+					{{itemInfo.descrtion}}
 				</view>
 			</view>
-			<view class="picList">
+			<view class="picList" v-if="itemInfo.piculs.length > 0 ">
 				<view class="pic" v-for="(item,index) in itemInfo.piculs " :key="index">
 					<image @click="clickImage(index)" :src="item" mode="aspectFill"></image>
 				</view>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+	import {getNickname,getAvatar} from '../../utils/tools.js'
 	export default {
 		name: "blogItem",
 		props: {
@@ -84,6 +85,8 @@
 			// console.log('fuck',this.itemInfo)
 		},
 		methods: {
+			getNickname,
+			getAvatar,
 			// 点击缩略图
 			clickImage: function(index) {
 				uni.previewImage({

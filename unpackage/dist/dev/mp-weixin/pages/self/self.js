@@ -126,15 +126,6 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var g0 = _vm.hasLogin ? Date.now() : null
-  _vm.$mp.data = Object.assign(
-    {},
-    {
-      $root: {
-        g0: g0,
-      },
-    }
-  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -265,7 +256,6 @@ var _store = __webpack_require__(/*! ../../uni_modules/uni-id-pages/common/store
 //
 //
 //
-//
 var _default = {
   data: function data() {
     return {};
@@ -276,9 +266,11 @@ var _default = {
     },
     userInfo: function userInfo() {
       return _store.store.userInfo;
-    }
+    },
+    tokeExpired: function tokeExpired() {}
   },
   methods: {
+    // token 失效
     // 判断是否是登录用户
     // 退出登录
     logout: function logout() {

@@ -108,7 +108,7 @@ try {
       return Promise.all(/*! import() | uni_modules/uview-ui/components/u-skeleton/u-skeleton */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uview-ui/components/u-skeleton/u-skeleton")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uview-ui/components/u-skeleton/u-skeleton.vue */ 343))
     },
     blogItem: function () {
-      return __webpack_require__.e(/*! import() | components/blogItem/blogItem */ "components/blogItem/blogItem").then(__webpack_require__.bind(null, /*! @/components/blogItem/blogItem.vue */ 351))
+      return Promise.all(/*! import() | components/blogItem/blogItem */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/blogItem/blogItem")]).then(__webpack_require__.bind(null, /*! @/components/blogItem/blogItem.vue */ 351))
     },
   }
 } catch (e) {
@@ -205,7 +205,7 @@ var _default = {
       navList: [{
         id: 1,
         name: "最新",
-        type: "publishDate"
+        type: "publish_date"
       }, {
         id: 2,
         name: "热门",
